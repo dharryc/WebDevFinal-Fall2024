@@ -9,20 +9,23 @@ Now, I don't think this is going to be easy, but I do think that it's something 
 ---
 * Nov 13 (15%)
      - Create HTML and CSS layout for site
+     - User can add an item on a list
      - Use basic layout made in this step to make static site generator
 * Nov 16 (30%)
     - Impliment C# API that is able to create and delete users with properly linked items
-    - Impliment different pages that make different things visable to different users (user can't see what has been purchased for them)
+    - User can see their own list on a page (add and remove)
+    - User can't see items that have been bought for them
+    - Other users can mark items as purchased
 * Nov 20 (45%)
-    - Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
+    - [ ] Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
 * Nov 23 (60%)
-    - Host site on AWS (research and find out how well that will work?)
+    - Host site on cloud (research and find out how well that will work)
     - Add countdown timers for upcoming events (christmas, birthdays, etc.)
 * Nov 26 (75%)
     - Host HTML/CSS/JS on non git server
     - Impliment user creation page with validation
 * Dec 4 (90%)
-    - Impliment abiltiy for users to add voice notes to a given item
+    - Impliment abiltiy for users to add a picture for item description
     - Make "shopping cart" so you can estimate how much a given set of gifts would cost without pulling up a calculator
 ---
 
@@ -40,25 +43,3 @@ This already gets me to the required 25 points, however, in addition, I plan to 
 These combined get me another 62 points, which should be PLENTY.
 
 Honestly, I'm really excited for this assignment. I think it's going to be really cool to impliment a simple but professional looking site running for my family. I think it will provide useful services to my family, and honestly, as time goes on, I'll be able to keep updating it to make it better with every class I take.
-
----
-
-### Features and general individual "projects"
-
-- Create HTML and CSS layout for site
-- Use basic layout made in this step to make static site generator
-- Impliment C# API that is able to create and delete users with properly linked items
-- Impliment different pages that make different things visable to different users (user can't see what has been purchased for them)
-- Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
-- Host site on AWS (research and find out how well that will work?)
-- Add countdown timers for upcoming events (christmas, birthdays, etc.)
-- Host HTML/CSS/JS on non git server
-- Impliment user creation page with validation
-- Impliment abiltiy for users to add voice notes to a given item
-- Make "shopping cart" so you can estimate how much a given set of gifts would cost without pulling up a calculator
-- Allow users to customise their page, (Allow for a user to see a kind of dark mode while keeping other users on the default?)
-- Allow users to customise what their page looks like to other users when visitied
-- Allow users to take pictures of existing items (in their house or that they just saw?)
-- Find a way to make my site update prices of items based on if they're on sale in real time?
-
-
