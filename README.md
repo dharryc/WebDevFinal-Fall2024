@@ -42,4 +42,4 @@ This already gets me to the required 25 points, however, in addition, I plan to 
 
 These combined get me another 62 points, which should be PLENTY.
 
-Honestly, I'm really excited for this assignment. I think it's going to be really cool to impliment a simple but professional looking site running for my family. I think it will provide useful services to my family, and honestly, as time goes on, I'll be able to keep updating it to make it better with every class I take.
+Honestly, I'm really excited for this assignment. I think it's going to be really cool to impliment a simple but professional looking site running for my family. I think it will provide useful services to my family, and as time goes on, I'll be able to keep updating it to make it better with every class I take.
