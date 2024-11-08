@@ -8,25 +8,25 @@ Now, I don't think this is going to be easy, but I do think that it's something 
 
 ---
 * Nov 13 (15%)
-     - Create HTML and CSS layout for site
-     - User can add an item on a list
-     - Use basic layout made in this step to make static site generator
+     - [ ] Create HTML and CSS layout for site
+     - [ ] User can add an item on a list
+     - [ ] Use basic layout made in this step to make static site generator
 * Nov 16 (30%)
-    - Impliment C# API that is able to create and delete users with properly linked items
-    - User can see their own list on a page (add and remove)
-    - User can't see items that have been bought for them
-    - Other users can mark items as purchased
+    - [ ] Impliment C# API that is able to create and delete users with properly linked items
+    - [ ] User can see their own list on a page (add and remove)
+    - [ ] User can't see items that have been bought for them
+    - [ ] Other users can mark items as purchased
 * Nov 20 (45%)
     - [ ] Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
 * Nov 23 (60%)
-    - Host site on cloud (research and find out how well that will work)
-    - Add countdown timers for upcoming events (christmas, birthdays, etc.)
+    - [ ] Host site on cloud (research and find out how well that will work)
+    - [ ] Add countdown timers for upcoming events (christmas, birthdays, etc.)
 * Nov 26 (75%)
-    - Host HTML/CSS/JS on non git server
-    - Impliment user creation page with validation
+    - [ ] Host HTML/CSS/JS on non git server
+    - [ ] Impliment user creation page with validation
 * Dec 4 (90%)
-    - Impliment abiltiy for users to add a picture for item description
-    - Make "shopping cart" so you can estimate how much a given set of gifts would cost without pulling up a calculator
+    - [ ] Impliment abiltiy for users to add a picture for item description
+    - [ ] Make "shopping cart" so you can estimate how much a given set of gifts would cost without pulling up a calculator
 ---
 
 In order to get the required 25 points for the hard parts of the project, my first plan is to use:
