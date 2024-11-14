@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                // Modern JavaScript output
+    "module": "ESNext",                // Use ES Modules
+    "moduleResolution": "node",        // Resolve modules like Node.js does, respecting file extensions
+    "outDir": "./compiledJS",          // Output compiled JavaScript to this directory
+    "strict": true,                    // Enable strict type-checking options
+    "esModuleInterop": true,          // Enable compatibility between CommonJS and ES modules
+    "skipLibCheck": true,             // Skip type-checking of declaration files
+    "forceConsistentCasingInFileNames": true,  // Enforce consistent casing of filenames
+    "lib": ["dom", "esnext"],          // Include DOM and modern JS features
+    "sourceMap": true,                // Generate source maps for debugging
+    "noImplicitAny": true,             // Flag for implicit "any" types
+  },
+  "include": [
+    "*.ts"                      // Include all TypeScript files under the src folder
+  ],
+  "exclude": [
+    "node_modules"                     // Exclude node_modules folder from compilation
+  ]
+}
+// npx tsc

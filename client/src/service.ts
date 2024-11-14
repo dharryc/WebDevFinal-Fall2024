@@ -3,3 +3,7 @@ export const thingTest = async () => {
   const thingObj = await thingPromise.text();
   return thingObj;
 };
+
+export const ThingTest2 = () =>{
+  return "I am a thing2"
+}
