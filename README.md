@@ -12,8 +12,8 @@ Now, I don't think this is going to be easy, but I do think that it's something 
      - [X] User can add an item on a list
      - [X] Use basic layout made in this step to make static site generator
 * Nov 16 (30%)
-    - [ ] Impliment user creation page with validation
-    - [ ] Impliment C# API that is able to create and delete users with properly linked items
+    - [X] Impliment user creation page with validation
+    - [X] Impliment C# API that is able to create and delete users with properly linked items
 * Nov 20 (45%)
     - [ ] User can see their own list on a page (add and remove)
     - [ ] Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
