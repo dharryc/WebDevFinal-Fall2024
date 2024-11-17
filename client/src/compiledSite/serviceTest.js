@@ -34,6 +34,20 @@ const formMaker = () => {
     inputParentNode.append(titleLabel, itemTitleNode, linkLabel, itemLinkNode, inputButtonNode);
     formNode?.append(inputParentNode);
 };
+console.log("this be workin");
 formMaker();
+
+const makeBlogPost = async (blog) => {
+    await fetch("http://localhost:5065/newUser", {
+      method: "POST",
+      body: JSON.stringify(blog),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
+
+  const Harry = {"userName":"Harry", "links" : [] , "descriptions" : [] , "id" : 55}
+//   await makeBlogPost(Harry)
 export {};
 //# sourceMappingURL=serviceTest.js.map

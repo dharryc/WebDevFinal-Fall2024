@@ -21,11 +21,13 @@ File.WriteAllText("../src/compiledSite/loginPrototype.html", loginPrototype);
 var userCreationPrototype = File.ReadAllText("config/template.html");
 
 //list prototype creation (for users to see and edit their own list)
-var userPagePrototype = File.ReadAllText("config/template.html");
-userPagePrototype = userPagePrototype.Replace("pageContent", "<div id=\"form\"> </div>");
-userPagePrototype = userPagePrototype.Replace("Document", "Add Item");
-userPagePrototype = userPagePrototype.Replace("jsSource", "./serviceTest.js");
-File.WriteAllText("../src/compiledSite/userPagePrototype.html", userPagePrototype);
+var userListPagePrototype = File.ReadAllText("config/template.html");
+userListPagePrototype = userListPagePrototype.Replace(contentKey, "<div id=\"form\"> </div>");
+userListPagePrototype = userListPagePrototype.Replace("Document", "Add Item");
+userListPagePrototype = userListPagePrototype.Replace("jsSource", "./serviceTest.js");
+userListPagePrototype = userListPagePrototype.Replace(navKey, navTemplate);
+userListPagePrototype = userListPagePrototype.Replace(loginKey, "");
+File.WriteAllText("../src/compiledSite/userListPagePrototype.html", userListPagePrototype);
 
 
 //Preview prototype (user will be able to see a "preview" of their page as it will appear to other users)
@@ -42,4 +44,9 @@ var listPrototype = File.ReadAllText("config/template.html");
 //setting up some basic CSS
 var cssPrototype = File.ReadAllText("config/template-style.css");
 File.WriteAllText("../src/compiledSite/template-style.css", cssPrototype);
-//find out how to run npx tsc in command line when updating
+
+
+// string commandText = "/C cd .. /b cd src /b npx tsc";
+
+// System.Diagnostics.Process.Start("CMD.exe", commandText);
+// //find out how to run npx tsc in command line when updating

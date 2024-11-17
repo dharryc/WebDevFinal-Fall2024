@@ -2,6 +2,14 @@ import { thingTest, ThingTest2 } from "./service.js";
 
 let StringThatShowsYouCanDoSomething = "";
 
+const CardMaker = (link: string, title: string | null) => {
+  const titleNode = document.createElement("h3");
+  titleNode.textContent = title;
+  const linkNode = document.createElement("a");
+  linkNode.textContent = link;
+  linkNode.setAttribute("href", link);
+};
+
 const formMaker = () => {
   const formNode = document.getElementById("form");
 
@@ -36,11 +44,10 @@ const formMaker = () => {
 
   inputButtonNode.addEventListener("click", (ev) => {
     StringThatShowsYouCanDoSomething += itemLinkNode.value;
-    StringThatShowsYouCanDoSomething += " ";
     StringThatShowsYouCanDoSomething += itemTitleNode.value;
+    CardMaker(itemLinkNode.value, itemTitleNode.value);
     itemTitleNode.value = "";
     itemLinkNode.value = "";
-    console.log(StringThatShowsYouCanDoSomething);
   });
 
   inputParentNode.append(
