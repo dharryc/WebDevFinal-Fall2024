@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
@@ -15,16 +16,18 @@ var storageRoot = "./storage";
 
 if (!Directory.Exists(storageRoot)) Directory.CreateDirectory(storageRoot);
 
-HashSet<User> ExistingUsers = [];
+HashSet<string> ExistingUsers = [];
 
 app.MapPost("/newUser", async (User user) =>
 {
-  ExistingUsers.Add(user);
+  if (ExistingUsers.Contains(user.UserName)) return "That user already exists. Please try logging in with that username or asking Harry what he broke";
+  ExistingUsers.Add(user.UserName);
   var userPath = Path.Combine(storageRoot, Convert.ToString(user.Id));
   Directory.CreateDirectory(userPath);
 
   var userFile = Path.Combine(userPath, "user.json");
   await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(user));
+  return "New user created!";
 });
 
 app.MapGet("/user/{userName}", (string userName) =>
@@ -42,13 +45,19 @@ app.MapGet("/user/{userName}", (string userName) =>
   return user;
 });
 
-app.MapDelete("/user/{userName}/delete", (User user) =>{
-  if(!ExistingUsers.Contains(user))
+app.MapDelete("/user/{userName}/delete", ([FromBody] User user) =>
+{
+  if (!ExistingUsers.Contains(user.UserName))
   {
     throw new Exception("User not found");
   }
   var blogFolder = user.UserName;
-  var blogFile = Path.Combine(storageRoot, blogFolder, "user.json");
+  var blogFile = Path.Combine(storageRoot, Convert.ToString(user.Id));
+  // var blogPath = Path.Combine(storageRoot, id.ToString());
+  // if (!Directory.Exists(blogPath))
+  //   throw new Exception("Blog not found.");
+
+  // Directory.Delete(blogPath, true);
 });
 // var blogPath = Path.Combine(storageRoot, blog.Id.ToString());
 // Directory.CreateDirectory(blogPath);

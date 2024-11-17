@@ -14,14 +14,15 @@ Now, I don't think this is going to be easy, but I do think that it's something 
 * Nov 16 (30%)
     - [ ] Impliment user creation page with validation
     - [ ] Impliment C# API that is able to create and delete users with properly linked items
-    - [ ] User can see their own list on a page (add and remove)
 * Nov 20 (45%)
+    - [ ] User can see their own list on a page (add and remove)
     - [ ] Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
 * Nov 23 (60%)
     - [ ] Other users can mark items as purchased
     - [ ] User can't see items that have been bought for them
     - [ ] Add countdown timers for upcoming events (christmas, birthdays, etc.)
 * Nov 26 (75%)
+    - [ ] Figure out how to store HashSet in a file and read it out so users persist
     - [ ] Host site on cloud (research and find out how well that will work)
     - [ ] Host HTML/CSS/JS on non git server
 * Dec 4 (90%)

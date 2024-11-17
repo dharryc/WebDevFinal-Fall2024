@@ -48,6 +48,6 @@ const makeBlogPost = async (blog) => {
   };
 
   const Harry = {"userName":"Harry", "links" : [] , "descriptions" : [] , "id" : 55}
-//   await makeBlogPost(Harry)
+  await makeBlogPost(Harry)
 export {};
 //# sourceMappingURL=serviceTest.js.map
