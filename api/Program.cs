@@ -1,5 +1,8 @@
 using System.Text.Json;
+using System.Xml.Serialization;
 using Microsoft.AspNetCore.Mvc;
+XmlSerializer mySerializer = new(typeof(HashSet<string>));
+StreamWriter myWriter = new StreamWriter("./storage/hashset/file.xml");
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
@@ -20,14 +23,20 @@ HashSet<string> ExistingUsers = [];
 
 app.MapPost("/newUser", async (User user) =>
 {
-  if (ExistingUsers.Contains(user.UserName)) return "That user already exists. Please try logging in with that username or asking Harry what he broke";
   ExistingUsers.Add(user.UserName);
+  mySerializer.Serialize(myWriter, ExistingUsers);
+  myWriter.Close();
   var userPath = Path.Combine(storageRoot, Convert.ToString(user.Id));
   Directory.CreateDirectory(userPath);
 
   var userFile = Path.Combine(userPath, "user.json");
   await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(user));
-  return "New user created!";
+});
+
+app.MapGet("/userList", () =>{
+  string[] myUsers = new string[ExistingUsers.Count()];
+  ExistingUsers.CopyTo(myUsers);
+  return JsonSerializer.Serialize(myUsers);
 });
 
 app.MapGet("/user/{userName}", (string userName) =>
@@ -68,3 +77,7 @@ app.MapDelete("/user/{userName}/delete", ([FromBody] User user) =>
 app.Run();
 
 public record User(string UserName, string[]? Links, string[]? Descriptions, ulong Id);
+
+// using var myFileStream = new FileStream("4.7.xml", FileMode.Open);
+// var myObject = (User)mySerializer.Deserialize(myFileStream);
+// Console.Write(myObject);

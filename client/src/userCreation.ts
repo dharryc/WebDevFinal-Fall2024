@@ -1,4 +1,5 @@
 // public record User(string UserName, string[]? Links, string[]? Descriptions, ulong Id);
+import { userNameVerification } from "./userCreationService.js";
 
 const makeForm = () => {
   const userCreationForm = document.getElementById("userForm");
@@ -18,6 +19,12 @@ const makeForm = () => {
   const submitButton = document.createElement("input");
   submitButton.setAttribute("type", "submit");
   submitButton.setAttribute("value", "Create User");
+
+  formWrapperNode.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const thisthing = await userNameVerification(userNameInput.value);
+    console.log(thisthing);
+  });
 
   formWrapperNode.append(userNameLabel, userNameInput, submitButton);
   userCreationForm?.append(formWrapperNode);
