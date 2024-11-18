@@ -1,5 +1,6 @@
 // public record User(string UserName, string[]? Links, string[]? Descriptions, ulong Id);
 import { userNameVerification } from "./userCreationService.js";
+import { DeleteUser } from "./userDeleteService.js";
 
 const makeForm = () => {
   const userCreationForm = document.getElementById("userForm");
@@ -31,3 +32,4 @@ const makeForm = () => {
 };
 
 makeForm();
+DeleteUser("bo");

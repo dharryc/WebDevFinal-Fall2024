@@ -24,4 +24,5 @@ C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\obj\Debug\net8.0\refint
 C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\obj\Debug\net8.0\api.pdb
 C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\obj\Debug\net8.0\ref\api.dll
-C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\bin\Debug\net8.0\storage\0\user.json
+C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\bin\Debug\net8.0\storage\bo\user.json
+C:\Users\dharr\HOMEWORK\web dev\WebDevFinal-Fall2024\api\bin\Debug\net8.0\storage\bob\user.json
