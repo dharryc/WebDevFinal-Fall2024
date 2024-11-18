@@ -19,7 +19,8 @@ var storageRoot = "./storage";
 
 if (!Directory.Exists(storageRoot)) Directory.CreateDirectory(storageRoot);
 
-HashSet<string> ExistingUsers = [];
+using var myFileStream = new FileStream("./storage/hashset/file.xml", FileMode.Open);
+HashSet<string> ExistingUsers = (HashSet<string>)mySerializer.Deserialize(myFileStream);
 
 app.MapPost("/newUser", async (User user) =>
 {
@@ -33,7 +34,8 @@ app.MapPost("/newUser", async (User user) =>
   await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(user));
 });
 
-app.MapGet("/userList", () =>{
+app.MapGet("/userList", () =>
+{
   string[] myUsers = new string[ExistingUsers.Count()];
   ExistingUsers.CopyTo(myUsers);
   return JsonSerializer.Serialize(myUsers);
@@ -77,7 +79,3 @@ app.MapDelete("/user/{userName}/delete", ([FromBody] User user) =>
 app.Run();
 
 public record User(string UserName, string[]? Links, string[]? Descriptions, ulong Id);
-
-// using var myFileStream = new FileStream("4.7.xml", FileMode.Open);
-// var myObject = (User)mySerializer.Deserialize(myFileStream);
-// Console.Write(myObject);
