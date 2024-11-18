@@ -1,0 +1,25 @@
+#nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    top: 0em;
+    padding: 1em;
+    background-color: var(--background-color);
+}
+
+#form {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+}
+
+#itemForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#itemForm label,
+button {
+    margin-top: .5em;
+}

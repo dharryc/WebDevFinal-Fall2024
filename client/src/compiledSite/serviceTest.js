@@ -1,4 +1,11 @@
 let StringThatShowsYouCanDoSomething = "";
+const CardMaker = (link, title) => {
+    const titleNode = document.createElement("h3");
+    titleNode.textContent = title;
+    const linkNode = document.createElement("a");
+    linkNode.textContent = link;
+    linkNode.setAttribute("href", link);
+};
 const formMaker = () => {
     const formNode = document.getElementById("form");
     const inputParentNode = document.createElement("form");
@@ -25,29 +32,14 @@ const formMaker = () => {
     });
     inputButtonNode.addEventListener("click", (ev) => {
         StringThatShowsYouCanDoSomething += itemLinkNode.value;
-        StringThatShowsYouCanDoSomething += " ";
         StringThatShowsYouCanDoSomething += itemTitleNode.value;
+        CardMaker(itemLinkNode.value, itemTitleNode.value);
         itemTitleNode.value = "";
         itemLinkNode.value = "";
-        console.log(StringThatShowsYouCanDoSomething);
     });
     inputParentNode.append(titleLabel, itemTitleNode, linkLabel, itemLinkNode, inputButtonNode);
     formNode?.append(inputParentNode);
 };
-console.log("this be workin");
 formMaker();
-
-const makeBlogPost = async (blog) => {
-    await fetch("http://localhost:5065/newUser", {
-      method: "POST",
-      body: JSON.stringify(blog),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
-
-  const Harry = {"userName":"Harry", "links" : [] , "descriptions" : [] , "id" : 55}
-  await makeBlogPost(Harry)
 export {};
 //# sourceMappingURL=serviceTest.js.map

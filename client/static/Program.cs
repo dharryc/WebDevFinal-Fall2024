@@ -1,24 +1,25 @@
-﻿// var layoutHTML = File.ReadAllText("config/layout.html");
-// var headerHTML = File.ReadAllText("config/header.html");
-// var page1HTML = File.ReadAllText("config/page1-body.html");
-// layoutHTML = layoutHTML.Replace("secretstring", headerHTML);
-
-// File.WriteAllText("out/index.html", page1HTML);
-var navTemplate = File.ReadAllText("./config/navbar.html");
+﻿var navTemplate = File.ReadAllText("./config/navbar.html");
 var logInTemplate = File.ReadAllText("./config/login.html");
+var baseTemplate = File.ReadAllText("./config/template.html");
 string navKey = "NavBar";
 string loginKey = "Login";
 string contentKey = "Content";
 
 //login prototype creation
-var loginPrototype = File.ReadAllText("config/template.html");
+var loginPrototype = baseTemplate;
 loginPrototype = loginPrototype.Replace(loginKey, logInTemplate);
 loginPrototype = loginPrototype.Replace(navKey, "");
 loginPrototype = loginPrototype.Replace(contentKey, "");
 File.WriteAllText("../src/compiledSite/loginPrototype.html", loginPrototype);
 
 //user creation page Prototype
-var userCreationPrototype = File.ReadAllText("config/template.html");
+var userCreationPrototype = baseTemplate;
+userCreationPrototype = userCreationPrototype.Replace(loginKey, "");
+userCreationPrototype = userCreationPrototype.Replace(contentKey, "<div id=\"userForm\"> </div>");
+userCreationPrototype = userCreationPrototype.Replace(navKey, "");
+userCreationPrototype = userCreationPrototype.Replace("Document", "New User");
+userCreationPrototype = userCreationPrototype.Replace("jsSource", "./userCreation.js");
+File.WriteAllText("../src/compiledSite/userCreationPrototype.html", userCreationPrototype);
 
 //list prototype creation (for users to see and edit their own list)
 var userListPagePrototype = File.ReadAllText("config/template.html");
@@ -42,8 +43,8 @@ var listPrototype = File.ReadAllText("config/template.html");
 
 
 //setting up some basic CSS
-var cssPrototype = File.ReadAllText("config/template-style.css");
-File.WriteAllText("../src/compiledSite/template-style.css", cssPrototype);
+var cssPrototype = File.ReadAllText("config/base-style.css");
+File.WriteAllText("../src/compiledSite/base-style.css", cssPrototype);
 
 
 // string commandText = "/C cd .. /b cd src /b npx tsc";
