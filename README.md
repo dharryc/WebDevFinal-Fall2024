@@ -15,8 +15,8 @@ Now, I don't think this is going to be easy, but I do think that it's something 
     - [X] Impliment user creation page with validation
     - [X] Impliment C# API that is able to create and delete users with properly linked items
 * Nov 20 (45%)
-    - [ ] User can see their own list on a page (add and remove)
-    - [ ] Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
+    - [X] User can see their own list on a page (add and remove)
+    - [X] Tie API to site so that it is dynamically updatable and usable (SO MUCH JS)
 * Nov 23 (60%)
     - [ ] Other users can mark items as purchased
     - [ ] User can't see items that have been bought for them

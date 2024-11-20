@@ -16,6 +16,7 @@ app.UseCors(c =>
 app.MapGet("/", () => "Hello World!");
 
 var storageRoot = "./storage";
+var hashSetRoot = "./storage/hash.json";
 
 if (!Directory.Exists(storageRoot)) Directory.CreateDirectory(storageRoot);
 
@@ -23,9 +24,16 @@ if (!Directory.Exists(storageRoot)) Directory.CreateDirectory(storageRoot);
 // var myHashSetThing = File.ReadAllText("./storage/hashset.json");
 //   var thisIsATest = JsonSerializer.Serialize(ExistingUsers);
 //   File.WriteAllText("./storage/hashset.json", thisIsATest);
-
-HashSet<string> ExistingUsers = [];
-
+  HashSet<string> ExistingUsers = [];
+if (!Directory.Exists(hashSetRoot))
+{
+  ExistingUsers = [];
+}
+else
+{
+  var myHashSetThing = File.ReadAllText("./storage/hash.json");
+  ExistingUsers = JsonSerializer.Deserialize<HashSet<string>>(myHashSetThing);
+}
 app.MapPost("/newUser", async (User user) =>
 {
   ExistingUsers.Add(user.UserName);
