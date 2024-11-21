@@ -1,9 +1,12 @@
 ﻿var navTemplate = File.ReadAllText("./config/navbar.html");
 var logInTemplate = File.ReadAllText("./config/login.html");
 var baseTemplate = File.ReadAllText("./config/template.html");
+var userListTemplate = File.ReadAllText("./config/userList.html");
 string navKey = "NavBar";
 string loginKey = "Login";
 string contentKey = "Content";
+string cssTemplate = "base-style.css";
+string moreStuffKey = "/* more stuff */";
 
 //login prototype creation
 var loginPrototype = baseTemplate;
@@ -19,11 +22,12 @@ userCreationPrototype = userCreationPrototype.Replace(contentKey, "<div id=\"use
 userCreationPrototype = userCreationPrototype.Replace(navKey, "");
 userCreationPrototype = userCreationPrototype.Replace("Document", "New User");
 userCreationPrototype = userCreationPrototype.Replace("jsSource", "./userCreation.js");
+userCreationPrototype = userCreationPrototype.Replace(cssTemplate, "newUser-style.css");
 File.WriteAllText("../src/compiledSite/userCreationPrototype.html", userCreationPrototype);
 
 //list prototype creation (for users to see and edit their own list)
 var userListPagePrototype = File.ReadAllText("config/template.html");
-userListPagePrototype = userListPagePrototype.Replace(contentKey, "<div id=\"form\"> </div>");
+userListPagePrototype = userListPagePrototype.Replace(contentKey, userListTemplate);
 userListPagePrototype = userListPagePrototype.Replace("Document", "Add Item");
 userListPagePrototype = userListPagePrototype.Replace("jsSource", "./serviceTest.js");
 userListPagePrototype = userListPagePrototype.Replace(navKey, navTemplate);
@@ -31,23 +35,10 @@ userListPagePrototype = userListPagePrototype.Replace(loginKey, "");
 File.WriteAllText("../src/compiledSite/userListPagePrototype.html", userListPagePrototype);
 
 
-//Preview prototype (user will be able to see a "preview" of their page as it will appear to other users)
-var listPrototype = File.ReadAllText("config/template.html");
-
-//
-// var listPrototype = File.ReadAllText("config/template.html");
-
-
-// var listPrototype = File.ReadAllText("config/template.html");
-
-
-
 //setting up some basic CSS
 var cssPrototype = File.ReadAllText("config/base-style.css");
 File.WriteAllText("../src/compiledSite/base-style.css", cssPrototype);
 
-
-// string commandText = "/C cd .. /b cd src /b npx tsc";
-
-// System.Diagnostics.Process.Start("CMD.exe", commandText);
-// //find out how to run npx tsc in command line when updating
+var cssNewUserTemplate = File.ReadAllText("./config/newUser-style.css");
+var cssNewUser = cssPrototype.Replace("/* more styling */", cssNewUserTemplate);
+File.WriteAllText("../src/compiledSite/newUser-style.css", cssNewUser);

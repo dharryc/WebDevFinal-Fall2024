@@ -10,6 +10,7 @@
     background-color: var(--background);
     padding: 0;
     margin: 0;
+    height: 100vh;
 }
 
 #page {
@@ -20,6 +21,7 @@
     align-items: center;
     justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
 /* more styling */

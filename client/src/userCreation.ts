@@ -7,6 +7,7 @@ const makeForm = () => {
 
   const formWrapperNode = document.createElement("form");
   formWrapperNode.setAttribute("action", "submit");
+  formWrapperNode.setAttribute("id", "newUserForm");
 
   const userNameLabel = document.createElement("label");
   userNameLabel.setAttribute("for", "userName");
@@ -23,8 +24,7 @@ const makeForm = () => {
 
   formWrapperNode.addEventListener("submit", async (ev) => {
     ev.preventDefault();
-    const thisthing = await userNameVerification(userNameInput.value);
-    console.log(thisthing);
+    await userNameVerification(userNameInput.value);
   });
 
   formWrapperNode.append(userNameLabel, userNameInput, submitButton);
@@ -32,4 +32,3 @@ const makeForm = () => {
 };
 
 makeForm();
-DeleteUser("bo");

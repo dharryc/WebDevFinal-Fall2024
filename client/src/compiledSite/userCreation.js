@@ -1,10 +1,10 @@
 // public record User(string UserName, string[]? Links, string[]? Descriptions, ulong Id);
 import { userNameVerification } from "./userCreationService.js";
-import { DeleteUser } from "./userDeleteService.js";
 const makeForm = () => {
     const userCreationForm = document.getElementById("userForm");
     const formWrapperNode = document.createElement("form");
     formWrapperNode.setAttribute("action", "submit");
+    formWrapperNode.setAttribute("id", "newUserForm");
     const userNameLabel = document.createElement("label");
     userNameLabel.setAttribute("for", "userName");
     userNameLabel.textContent = "Username:";
@@ -17,12 +17,10 @@ const makeForm = () => {
     submitButton.setAttribute("value", "Create User");
     formWrapperNode.addEventListener("submit", async (ev) => {
         ev.preventDefault();
-        const thisthing = await userNameVerification(userNameInput.value);
-        console.log(thisthing);
+        await userNameVerification(userNameInput.value);
     });
     formWrapperNode.append(userNameLabel, userNameInput, submitButton);
     userCreationForm?.append(formWrapperNode);
 };
 makeForm();
-DeleteUser("bo");
 //# sourceMappingURL=userCreation.js.map
