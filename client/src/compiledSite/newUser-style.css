@@ -24,13 +24,4 @@
     height: 100vh;
 }
 
-#newUserForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-#newUserForm input{
-    margin-top: .5em;
-}
+/* more stuff */

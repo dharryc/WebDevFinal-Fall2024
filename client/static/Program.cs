@@ -32,6 +32,7 @@ userListPagePrototype = userListPagePrototype.Replace("Document", "Add Item");
 userListPagePrototype = userListPagePrototype.Replace("jsSource", "./serviceTest.js");
 userListPagePrototype = userListPagePrototype.Replace(navKey, navTemplate);
 userListPagePrototype = userListPagePrototype.Replace(loginKey, "");
+userListPagePrototype = userListPagePrototype.Replace(cssTemplate, "userList-style.css");
 File.WriteAllText("../src/compiledSite/userListPagePrototype.html", userListPagePrototype);
 
 
@@ -42,3 +43,8 @@ File.WriteAllText("../src/compiledSite/base-style.css", cssPrototype);
 var cssNewUserTemplate = File.ReadAllText("./config/newUser-style.css");
 var cssNewUser = cssPrototype.Replace("/* more styling */", cssNewUserTemplate);
 File.WriteAllText("../src/compiledSite/newUser-style.css", cssNewUser);
+
+cssPrototype = File.ReadAllText("config/base-style.css");
+var cssNavTemplate = File.ReadAllText("./config/navStyling.css");
+var cssUserList = cssPrototype.Replace(moreStuffKey, cssNavTemplate);
+File.WriteAllText("../src/compiledSite/userList-style.css", cssUserList);

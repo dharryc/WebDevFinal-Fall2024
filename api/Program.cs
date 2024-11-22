@@ -1,8 +1,4 @@
 using System.Text.Json;
-using System.Xml.Serialization;
-using Microsoft.AspNetCore.Mvc;
-XmlSerializer mySerializer = new
-XmlSerializer(typeof(HashSet<string>));
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
@@ -20,14 +16,9 @@ var hashSetRoot = "./hash";
 
 if (!Directory.Exists(storageRoot)) Directory.CreateDirectory(storageRoot);
 
-
-// var myHashSetThing = File.ReadAllText("./storage/hashset.json");
-//   var thisIsATest = JsonSerializer.Serialize(ExistingUsers);
-//   File.WriteAllText("./storage/hashset.json", thisIsATest);
 HashSet<string> ExistingUsers = [];
 if (!Directory.Exists(hashSetRoot))
 {
-  ExistingUsers = [];
   Directory.CreateDirectory(hashSetRoot);
 }
 else
