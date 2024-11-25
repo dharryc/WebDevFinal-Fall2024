@@ -1,9 +1,5 @@
-export const thingTest = async () => {
-  const thingPromise = await fetch("http://localhost:5065");
-  const thingObj = await thingPromise.text();
-  return thingObj;
+export const currentUser = async (userName: string | null) => {
+  const userPromise = await fetch(`http://localhost:5065/user/${userName}`);
+  const userObj = await userPromise.json();
+  return userObj;
 };
-
-export const ThingTest2 = () =>{
-  return "I am a thing2"
-}

@@ -58,9 +58,26 @@ app.MapGet("/user/{userName}", (string userName) =>
 
   var user = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory));
   if (user == null)
-    throw new Exception("Blog not found");
+    throw new Exception("user not found");
 
   return user;
+});
+
+app.MapGet("/user/{userName}/{link}/{description}", (string userName, string link, string description) =>
+{
+  var userFolder = userName;
+  var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
+
+  if (!File.Exists(userDirectory))
+    throw new Exception("User not found.");
+
+  var user = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory));
+  if (user == null)
+    throw new Exception("user not found");
+
+  user.Links.Add(link);
+  user.Descriptions.Add(description);
+  
 });
 
 app.MapDelete("/user/{userName}/delete", (string userName) =>
@@ -69,26 +86,26 @@ app.MapDelete("/user/{userName}/delete", (string userName) =>
   {
     throw new Exception("User not found");
   }
-  var blogFolder = userName;
-  var blogFile = Path.Combine(storageRoot, userName);
+  var userFolder = userName;
+  var userFile = Path.Combine(storageRoot, userName);
   ExistingUsers.Remove(userName);
   File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(ExistingUsers));
-  Directory.Delete(blogFile, true);
+  Directory.Delete(userFile, true);
 });
 
-// app.MapGet("/blogs/{blogId}/comments", (ulong blogId) =>
+// app.MapGet("/users/{userName}/items", (string userName) =>
 // {
-//   var commentsPath = Path.Combine(storageRoot, blogId.ToString(), "comments");
+//   var userPath = Path.Combine(storageRoot, userName.ToLower());
 //   if (!Directory.Exists(commentsPath))
 //     return [];
+//   return [];
+//   // var comments = Directory.GetFiles(commentsPath)
+//       // .Select((file) => File.ReadAllText(file))
+//       // .Select((rawComment) => JsonSerializer.Deserialize<Comment>(rawComment));
 
-//   var comments = Directory.GetFiles(commentsPath)
-//       .Select((file) => File.ReadAllText(file))
-//       .Select((rawComment) => JsonSerializer.Deserialize<Comment>(rawComment));
-
-//   return comments;
+//   // return comments;
 // });
 
 app.Run();
 
-public record User(string UserName, string[]? Links, string[]? Descriptions, ulong Id);
+public record User(string UserName, List<string> Links, List<string> Descriptions, List<bool> Purchased, ulong Id);

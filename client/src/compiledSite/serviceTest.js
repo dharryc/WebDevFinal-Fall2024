@@ -1,10 +1,27 @@
-let StringThatShowsYouCanDoSomething = "";
+import { currentUser } from "./service.js";
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get("user");
+const activeUser = (await currentUser(myParam));
+if (activeUser.links == null)
+    activeUser.links = [];
+if (activeUser.descriptions == null)
+    activeUser.descriptions = [];
+if (activeUser.purchased == null)
+    activeUser.purchased = [];
 const CardMaker = (link, title) => {
+    activeUser.links.push(link);
+    activeUser.descriptions.push(title);
+    activeUser.purchased.push(false);
+    const contentNode = document.getElementById("pageContent");
+    const cardWrapperNode = document.createElement("div");
     const titleNode = document.createElement("h3");
     titleNode.textContent = title;
     const linkNode = document.createElement("a");
     linkNode.textContent = link;
     linkNode.setAttribute("href", link);
+    cardWrapperNode.append(titleNode, linkNode);
+    contentNode?.append(cardWrapperNode);
+    console.log(activeUser);
 };
 const formMaker = () => {
     const formNode = document.getElementById("form");
@@ -31,8 +48,6 @@ const formMaker = () => {
         ev.preventDefault();
     });
     inputButtonNode.addEventListener("click", (ev) => {
-        StringThatShowsYouCanDoSomething += itemLinkNode.value;
-        StringThatShowsYouCanDoSomething += itemTitleNode.value;
         CardMaker(itemLinkNode.value, itemTitleNode.value);
         itemTitleNode.value = "";
         itemLinkNode.value = "";
@@ -41,5 +56,4 @@ const formMaker = () => {
     formNode?.append(inputParentNode);
 };
 formMaker();
-export {};
 //# sourceMappingURL=serviceTest.js.map

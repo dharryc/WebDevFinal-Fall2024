@@ -22,12 +22,26 @@ const makeForm = () => {
   submitButton.setAttribute("type", "submit");
   submitButton.setAttribute("value", "Create User");
 
+  const statusText = document.createElement("p");
+
+  const backToLogin = document.createElement("a");
+  backToLogin.setAttribute("href", "loginPrototype.html");
+  backToLogin.textContent = "Back to login page";
+
   formWrapperNode.addEventListener("submit", async (ev) => {
     ev.preventDefault();
-    await userNameVerification(userNameInput.value);
+    const creationMessage = await userNameVerification(userNameInput.value);
+    userNameInput.value = "";
+    statusText.textContent = creationMessage;
+    formWrapperNode.append(backToLogin);
   });
 
-  formWrapperNode.append(userNameLabel, userNameInput, submitButton);
+  formWrapperNode.append(
+    userNameLabel,
+    userNameInput,
+    submitButton,
+    statusText
+  );
   userCreationForm?.append(formWrapperNode);
 };
 
