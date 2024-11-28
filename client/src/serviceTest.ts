@@ -1,30 +1,18 @@
-import { currentUser } from "./service.js";
+import { currentUser, addNewItem, getUserItems } from "./service.js";
+
 interface user {
   userName: string;
-  links: string[];
-  descriptions: string[];
-  purchased: boolean[];
+  items: any[];
   id: Date;
 }
 
-const urlParams = new URLSearchParams(window.location.search);
-const myParam = urlParams.get("user");
-const activeUser = (await currentUser(myParam)) as unknown as user;
-if (activeUser.links == null) activeUser.links = [];
-if (activeUser.descriptions == null) activeUser.descriptions = [];
-if (activeUser.purchased == null) activeUser.purchased = [];
-
-const CardMaker = (link: string, title: string) => {
-  activeUser.links.push(link);
-  activeUser.descriptions.push(title);
-  activeUser.purchased.push(false);
-
+const CardMaker = async (link: string, description: string) => {
   const contentNode = document.getElementById("pageContent");
 
   const cardWrapperNode = document.createElement("div");
 
   const titleNode = document.createElement("h3");
-  titleNode.textContent = title;
+  titleNode.textContent = description;
 
   const linkNode = document.createElement("a");
   linkNode.textContent = link;
@@ -33,7 +21,6 @@ const CardMaker = (link: string, title: string) => {
 
   cardWrapperNode.append(titleNode, linkNode);
   contentNode?.append(cardWrapperNode);
-  console.log(activeUser)
 };
 
 const formMaker = () => {
@@ -68,7 +55,12 @@ const formMaker = () => {
     ev.preventDefault();
   });
 
-  inputButtonNode.addEventListener("click", (ev) => {
+  inputButtonNode.addEventListener("click", async (ev) => {
+    await addNewItem(
+      itemLinkNode.value,
+      itemTitleNode.value,
+      activeUser.userName
+    );
     CardMaker(itemLinkNode.value, itemTitleNode.value);
     itemTitleNode.value = "";
     itemLinkNode.value = "";
@@ -85,3 +77,11 @@ const formMaker = () => {
 };
 
 formMaker();
+
+const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get("user");
+const activeUser = (await currentUser(myParam)) as unknown as user;
+activeUser.items = await getUserItems(myParam);
+activeUser.items.forEach((item) => {
+  CardMaker(item.value.link, item.value.description);
+});

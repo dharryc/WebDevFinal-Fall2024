@@ -1,4 +1,8 @@
+using System.ComponentModel;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
@@ -63,21 +67,24 @@ app.MapGet("/user/{userName}", (string userName) =>
   return user;
 });
 
-app.MapGet("/user/{userName}/{link}/{description}", (string userName, string link, string description) =>
+app.MapPost("/user/{userName}/addItem/{newItemId}", async (ulong newItemId, string userName, Item newItem) =>
 {
   var userFolder = userName;
   var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
+  // ulong itemId = 129438235;
+  // Item thisthing = currentUser.Items[itemId];
 
   if (!File.Exists(userDirectory))
     throw new Exception("User not found.");
 
-  var user = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory));
-  if (user == null)
-    throw new Exception("user not found");
+  User? currentUser = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory)) ?? throw new Exception("user not found");
+  currentUser.Items ??= [];
+  newItem.Purchased = false;
+  currentUser.Items.Add(newItemId, newItem);
+  var userPath = Path.Combine(storageRoot, userName);
+  var userFile = Path.Combine(userPath, "user.json");
+  await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(currentUser));
 
-  user.Links.Add(link);
-  user.Descriptions.Add(description);
-  
 });
 
 app.MapDelete("/user/{userName}/delete", (string userName) =>
@@ -91,6 +98,16 @@ app.MapDelete("/user/{userName}/delete", (string userName) =>
   ExistingUsers.Remove(userName);
   File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(ExistingUsers));
   Directory.Delete(userFile, true);
+});
+
+app.MapGet("/{userName}/items", (string userName) =>
+{
+  var userFolder = userName;
+  var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
+
+  if (!File.Exists(userDirectory)) throw new Exception("User not found.");
+  User? currentUser = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory)) ?? throw new Exception("user not found");
+  return currentUser.Items?.ToArray();
 });
 
 // app.MapGet("/users/{userName}/items", (string userName) =>
@@ -108,4 +125,15 @@ app.MapDelete("/user/{userName}/delete", (string userName) =>
 
 app.Run();
 
-public record User(string UserName, List<string> Links, List<string> Descriptions, List<bool> Purchased, ulong Id);
+public record Item
+{
+  public string Link { get; set; }
+  public string Description { get; set; }
+  public bool Purchased { get; set; }
+};
+public record User
+{
+  public string? UserName { get; init; }
+  public Dictionary<ulong, Item>? Items { get; set; }
+  public ulong Id { get; init; }
+}

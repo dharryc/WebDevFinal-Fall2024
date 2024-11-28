@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dharr\\HOMEWORK\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj": {}
+    "C:\\Users\\dharr\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dharr\\HOMEWORK\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj": {
+    "C:\\Users\\dharr\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dharr\\HOMEWORK\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj",
+        "projectUniqueName": "C:\\Users\\dharr\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj",
         "projectName": "static",
-        "projectPath": "C:\\Users\\dharr\\HOMEWORK\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj",
+        "projectPath": "C:\\Users\\dharr\\web dev\\WebDevFinal-Fall2024\\client\\static\\static.csproj",
         "packagesPath": "C:\\Users\\dharr\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dharr\\HOMEWORK\\web dev\\WebDevFinal-Fall2024\\client\\static\\obj\\",
+        "outputPath": "C:\\Users\\dharr\\web dev\\WebDevFinal-Fall2024\\client\\static\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\dharr\\AppData\\Roaming\\NuGet\\NuGet.Config"

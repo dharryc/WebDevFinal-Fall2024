@@ -4,7 +4,6 @@ export const validateUser = async (user) => {
     if (usersObj.includes(user)) {
         return true;
     }
-    else
-        return false;
+    return false;
 };
 //# sourceMappingURL=loginService.js.map
