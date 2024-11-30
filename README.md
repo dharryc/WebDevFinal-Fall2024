@@ -22,11 +22,11 @@ Now, I don't think this is going to be easy, but I do think that it's something 
   - [x] Figure out how to store HashSet in a file and read it out so users persist
   - [x] Tie API to site so that it is dynamically updatable and usable
 - Nov 23 (60%)
-  - [ ] User can see their own list on a page (add and remove)
-  - [ ] User can't see items that have been bought for them
+  - [x] User can see their own list on a page (add and remove)
+  - [x] User can't see items that have been bought for them
 - Nov 26 (75%)
   - [ ] Add countdown timers for upcoming events (christmas, birthdays, etc.)
-  - [ ] Other users can mark items as purchased
+  - [x] Other users can mark items as purchased
 - Dec 4 (90%)
   - [ ] Host site on cloud (research and find out how well that will work)
   - [ ] Host HTML/CSS/JS on non git server
@@ -49,6 +49,6 @@ This already gets me to the required 25 points, however, in addition, I plan to 
 
 These combined get me another 62 points, which should be PLENTY.
 
-Honestly, I'm really excited for this assignment. I think it's going to be really cool to impliment a simple but professional looking site running for my family. I think it will provide useful services to my family, and as time goes on, I'll be able to keep updating it to make it better with every class I take.
+Honestly, I'm really excited for this assignment. I think it's going to be really cool to impliment a simple site running for my family. I think it will provide useful services to my family, and as time goes on, I'll be able to keep updating it to make it better with every class I take.
 
 <!-- Local storage not Cookie -->

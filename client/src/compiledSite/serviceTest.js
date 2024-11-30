@@ -1,13 +1,12 @@
 import { currentUser, addNewItem, getUserItems } from "./service.js";
-const CardMaker = async (link, description) => {
+const CardMaker = (link, description) => {
     const contentNode = document.getElementById("pageContent");
     const cardWrapperNode = document.createElement("div");
-    const titleNode = document.createElement("h3");
-    titleNode.textContent = description;
+    cardWrapperNode.classList.add("itemCard");
     const linkNode = document.createElement("a");
-    linkNode.textContent = link;
+    linkNode.textContent = description;
     linkNode.setAttribute("href", link);
-    cardWrapperNode.append(titleNode, linkNode);
+    cardWrapperNode.append(linkNode);
     contentNode?.append(cardWrapperNode);
 };
 const formMaker = () => {
@@ -44,11 +43,15 @@ const formMaker = () => {
     formNode?.append(inputParentNode);
 };
 formMaker();
-const urlParams = new URLSearchParams(window.location.search);
-const myParam = urlParams.get("user");
-const activeUser = (await currentUser(myParam));
-activeUser.items = await getUserItems(myParam);
-activeUser.items.forEach((item) => {
+const userNameInUrl = new URLSearchParams(window.location.search);
+const activeUserName = userNameInUrl.get("user");
+const activeUser = (await currentUser(activeUserName));
+activeUser.items = await getUserItems(activeUserName);
+activeUser.items?.forEach((item) => {
     CardMaker(item.value.link, item.value.description);
 });
+const familyList = document.getElementById("familyList");
+familyList?.setAttribute("href", `http://127.0.0.1:5500/compiledSite/familyListPagePrototype.html?user=${activeUser.userName}`);
+const userList = document.getElementById("userList");
+userList?.setAttribute("href", `http://127.0.0.1:5500/compiledSite/userListPagePrototype.html?user=${activeUser.userName}`);
 //# sourceMappingURL=serviceTest.js.map

@@ -1,44 +1,37 @@
 import { currentUser, addNewItem, getUserItems } from "./service.js";
 
-interface user {
-  userName: string;
-  items: any[];
-  id: Date;
-}
 
-const CardMaker = async (link: string, description: string) => {
+const CardMaker = (link: string, description: string) => {
   const contentNode = document.getElementById("pageContent");
 
   const cardWrapperNode = document.createElement("div");
-
-  const titleNode = document.createElement("h3");
-  titleNode.textContent = description;
-
+  cardWrapperNode.classList.add("itemCard");
+  
   const linkNode = document.createElement("a");
-  linkNode.textContent = link;
-
+  linkNode.textContent = description;
+  
   linkNode.setAttribute("href", link);
-
-  cardWrapperNode.append(titleNode, linkNode);
+  
+  cardWrapperNode.append(linkNode);
   contentNode?.append(cardWrapperNode);
 };
 
 const formMaker = () => {
   const formNode = document.getElementById("form");
-
+  
   const inputParentNode = document.createElement("form");
   inputParentNode.setAttribute("action", "submit");
   inputParentNode.setAttribute("id", "itemForm");
-
+  
   const itemTitleNode = document.createElement("input");
   itemTitleNode.setAttribute("type", "text");
   itemTitleNode.setAttribute("id", "title");
   itemTitleNode.setAttribute("name", "title");
-
+  
   const titleLabel = document.createElement("label");
   titleLabel.setAttribute("for", "title");
   titleLabel.textContent = "Description of your item:";
-
+  
   const itemLinkNode = document.createElement("input");
   itemLinkNode.setAttribute("type", "text");
   itemTitleNode.setAttribute("id", "link");
@@ -47,14 +40,14 @@ const formMaker = () => {
   const linkLabel = document.createElement("label");
   linkLabel.setAttribute("for", "link");
   linkLabel.textContent = "Link for your item:";
-
+  
   const inputButtonNode = document.createElement("button");
   inputButtonNode.textContent = "Add Item";
-
+  
   inputParentNode.addEventListener("submit", (ev) => {
     ev.preventDefault();
   });
-
+  
   inputButtonNode.addEventListener("click", async (ev) => {
     await addNewItem(
       itemLinkNode.value,
@@ -65,7 +58,7 @@ const formMaker = () => {
     itemTitleNode.value = "";
     itemLinkNode.value = "";
   });
-
+  
   inputParentNode.append(
     titleLabel,
     itemTitleNode,
@@ -78,10 +71,15 @@ const formMaker = () => {
 
 formMaker();
 
-const urlParams = new URLSearchParams(window.location.search);
-const myParam = urlParams.get("user");
-const activeUser = (await currentUser(myParam)) as unknown as user;
-activeUser.items = await getUserItems(myParam);
-activeUser.items.forEach((item) => {
+const userNameInUrl = new URLSearchParams(window.location.search);
+const activeUserName = userNameInUrl.get("user");
+const activeUser = (await currentUser(activeUserName)) as any;
+activeUser.items = await getUserItems(activeUserName);
+activeUser.items?.forEach((item: any) => {
   CardMaker(item.value.link, item.value.description);
 });
+
+const familyList = document.getElementById("familyList")
+familyList?.setAttribute("href", `http://127.0.0.1:5500/compiledSite/familyListPagePrototype.html?user=${activeUser.userName}`)
+const userList = document.getElementById("userList")
+userList?.setAttribute("href", `http://127.0.0.1:5500/compiledSite/userListPagePrototype.html?user=${activeUser.userName}`)

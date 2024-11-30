@@ -110,25 +110,42 @@ app.MapGet("/{userName}/items", (string userName) =>
   return currentUser.Items?.ToArray();
 });
 
-// app.MapGet("/users/{userName}/items", (string userName) =>
-// {
-//   var userPath = Path.Combine(storageRoot, userName.ToLower());
-//   if (!Directory.Exists(commentsPath))
-//     return [];
-//   return [];
-//   // var comments = Directory.GetFiles(commentsPath)
-//       // .Select((file) => File.ReadAllText(file))
-//       // .Select((rawComment) => JsonSerializer.Deserialize<Comment>(rawComment));
+app.MapGet("/{userName}/{itemId}", async (string userName, ulong itemId) =>
+{
+  var userFolder = userName;
+  var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
 
-//   // return comments;
-// });
+  if (!File.Exists(userDirectory)) throw new Exception("User not found.");
+  User currentUser = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory)) ?? throw new Exception("user not found");
+  Console.WriteLine(currentUser);
+  currentUser.Items[itemId].Purchased = !currentUser.Items[itemId].Purchased;
+  var userPath = Path.Combine(storageRoot, userName);
+  var userFile = Path.Combine(userPath, "user.json");
+  await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(currentUser));
+  Console.WriteLine(currentUser.Items[itemId].Purchased);
+});
+
+app.MapGet("/allUsers", () =>
+{
+  List<User> usersToReturn = [];
+  foreach (string name in ExistingUsers)
+  {
+    var userFolder = name;
+    var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
+
+    if (!File.Exists(userDirectory)) throw new Exception("User not found.");
+    User currentUser = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory)) ?? throw new Exception("user not found");
+    usersToReturn.Add(currentUser);
+  }
+  return usersToReturn;
+});
 
 app.Run();
 
 public record Item
 {
-  public string Link { get; set; }
-  public string Description { get; set; }
+  public string? Link { get; set; }
+  public string? Description { get; set; }
   public bool Purchased { get; set; }
 };
 public record User
