@@ -28,7 +28,7 @@ Now, I don't think this is going to be easy, but I do think that it's something 
   - [ ] Add countdown timers for upcoming events (christmas, birthdays, etc.)
   - [x] Other users can mark items as purchased
 - Dec 4 (90%)
-  - [ ] Host site on cloud (research and find out how well that will work)
+  - [ ] Host site on cloud
   - [ ] Host HTML/CSS/JS on non git server
   - [ ] Impliment abiltiy for users to add a picture for item description
 
@@ -36,16 +36,16 @@ Now, I don't think this is going to be easy, but I do think that it's something 
 
 In order to get the required 25 points for the hard parts of the project, my first plan is to use:
 
-- Back end API (15pts)
-- Host API on cloud server (10pts)
+  - [X] Back end API (15pts)
+  - [X] Uploading, storing, and using files on a custom api (15pts)
+  - [X] Typescript (10pts)
+  - [X] And, though ambitious, I hope to write a static site generator (provided I actually understand what that means, 25pts)
+  - [ ] Host API on cloud server (10pts)
 
 This already gets me to the required 25 points, however, in addition, I plan to use:
 
-- Uploading, storing, and using files on a custom api (15pts)
-- Work with audio / video files (8pts)
-- Make it mobile responsive (8pts)
-- Typescript (10pts)
-- And, though ambitious, I hope to write a static site generator (provided I actually understand what that means, 25pts)
+  - [ ] Work with audio / video files (8pts)
+  - [ ] Make it mobile responsive (8pts)
 
 These combined get me another 62 points, which should be PLENTY.
 
