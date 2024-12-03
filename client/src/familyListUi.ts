@@ -62,10 +62,10 @@ GenerateList();
 const familyList = document.getElementById("familyList");
 familyList?.setAttribute(
   "href",
-  `http://127.0.0.1:5500/compiledSite/familyListPagePrototype.html?user=${activeUserName}`
+  `https://dharryc.github.io/WebDevFinal-Fall2024/familyListPagePrototype.html?user=${activeUserName}`
 );
 const userList = document.getElementById("userList");
 userList?.setAttribute(
   "href",
-  `http://127.0.0.1:5500/compiledSite/userListPagePrototype.html?user=${activeUserName}`
+  `https://dharryc.github.io/WebDevFinal-Fall2024/userListPagePrototype.html?user=${activeUserName}`
 );

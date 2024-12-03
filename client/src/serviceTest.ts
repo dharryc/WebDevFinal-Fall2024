@@ -80,6 +80,6 @@ activeUser.items?.forEach((item: any) => {
 });
 
 const familyList = document.getElementById("familyList")
-familyList?.setAttribute("href", `http://127.0.0.1:5500/compiledSite/familyListPagePrototype.html?user=${activeUser.userName}`)
+familyList?.setAttribute("href", `https://dharryc.github.io/WebDevFinal-Fall2024/familyListPagePrototype.html?user=${activeUser.userName}`)
 const userList = document.getElementById("userList")
-userList?.setAttribute("href", `http://127.0.0.1:5500/compiledSite/userListPagePrototype.html?user=${activeUser.userName}`)
+userList?.setAttribute("href", `https://dharryc.github.io/WebDevFinal-Fall2024/userListPagePrototype.html?user=${activeUser.userName}`)
