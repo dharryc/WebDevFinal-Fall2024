@@ -3,7 +3,7 @@
     "target": "ESNext",                // Modern JavaScript output
     "module": "ESNext",                // Use ES Modules
     "moduleResolution": "node",        // Resolve modules like Node.js does, respecting file extensions
-    "outDir": "compiledSite",          // Output compiled JavaScript to this directory
+    "outDir": "../../docs",          // Output compiled JavaScript to this directory
     "strict": true,                    // Enable strict type-checking options
     "esModuleInterop": true,          // Enable compatibility between CommonJS and ES modules
     "skipLibCheck": true,             // Skip type-checking of declaration files
