@@ -3,11 +3,11 @@ export const togglePurchase = async (
   itemId: number | null,
   userName: string | null
 ) => {
-  await fetch(`http://localhost:5065/${userName}/${itemId}`);
+  await fetch(`https://finalproject-35asp3tk.b4a.run/${userName}/${itemId}`);
 };
 
 export const allUsers = async () => {
-  const usersPromise = await fetch(`http://localhost:5065/allUsers`);
+  const usersPromise = await fetch(`https://finalproject-35asp3tk.b4a.run/allUsers`);
   const userList = await usersPromise.json();
   return userList;
 };

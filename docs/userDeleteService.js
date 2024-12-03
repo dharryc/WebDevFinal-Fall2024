@@ -1,5 +1,5 @@
 export const DeleteUser = async (username) => {
-    await fetch(`http://localhost:5065/user/${username}/delete`, {
+    await fetch(`https://finalproject-35asp3tk.b4a.run/user/${username}/delete`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

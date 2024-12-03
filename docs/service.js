@@ -1,5 +1,5 @@
 export const currentUser = async (userName) => {
-    const userPromise = await fetch(`http://localhost:5065/user/${userName}`);
+    const userPromise = await fetch(`https://finalproject-35asp3tk.b4a.run/user/${userName}`);
     const userObj = await userPromise.json();
     return userObj;
 };
@@ -8,7 +8,7 @@ export const addNewItem = async (mylink, mydescription, userName) => {
         link: mylink,
         description: mydescription,
     };
-    await fetch(`http://localhost:5065/user/${userName}/addItem/${Date.now()}`, {
+    await fetch(`https://finalproject-35asp3tk.b4a.run/user/${userName}/addItem/${Date.now()}`, {
         method: "POST",
         body: JSON.stringify(thisItem),
         headers: {
@@ -17,7 +17,7 @@ export const addNewItem = async (mylink, mydescription, userName) => {
     });
 };
 export const getUserItems = async (userName) => {
-    const itemsPromise = await fetch(`http://localhost:5065/${userName}/items`);
+    const itemsPromise = await fetch(`https://finalproject-35asp3tk.b4a.run/${userName}/items`);
     const itemsObj = await itemsPromise.json();
     return itemsObj;
 };
