@@ -1,0 +1,9 @@
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\api.exe
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\appsettings.Development.json
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\appsettings.json
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\hash\hashObj.json
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\storage\harry\user.json
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\api.dll
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\api.deps.json
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\api.runtimeconfig.json
+C:\Users\dharr\web dev\WebDevFinal-Fall2024\api\out\api.pdb
