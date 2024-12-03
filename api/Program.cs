@@ -13,7 +13,7 @@ app.UseCors(c =>
      .AllowAnyMethod()
      .AllowAnyOrigin());
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => "MY API IS RUNNING");
 
 var storageRoot = "./storage";
 var hashSetRoot = "./hash";
