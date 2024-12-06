@@ -8,7 +8,8 @@ logInNode?.addEventListener("submit", async (ev) => {
   ).value.toLowerCase();
   if (await validateUser(username)) {
     window.location.href = `https://dharryc.github.io/WebDevFinal-Fall2024/userListPagePrototype.html?user=${username}`;
+  } else {
+    const errorText = document.getElementById("error") as any;
+    errorText.textContent = "I couldn't find that user.";
   }
-  const errorText = (document.getElementById("error") as any)
-  errorText.textContent = "I couldn't find that user."
 });

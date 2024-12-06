@@ -1,9 +1,10 @@
 import { getUserItems } from "./service.js";
+import { rootUrl } from "./constants.js";
 export const togglePurchase = async (itemId, userName) => {
-    await fetch(`https://finalproject-35asp3tk.b4a.run/${userName}/${itemId}`);
+    await fetch(`${rootUrl}/${userName}/${itemId}`);
 };
 export const allUsers = async () => {
-    const usersPromise = await fetch(`https://finalproject-35asp3tk.b4a.run/allUsers`);
+    const usersPromise = await fetch(`${rootUrl}/allUsers`);
     const userList = await usersPromise.json();
     return userList;
 };

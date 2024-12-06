@@ -1,5 +1,6 @@
+import { rootUrl } from "./constants.js";
 export const currentUser = async (userName: string | null) => {
-  const userPromise = await fetch(`https://finalproject-35asp3tk.b4a.run/user/${userName}`);
+  const userPromise = await fetch(`${rootUrl}/user/${userName}`);
   const userObj = await userPromise.json();
   return userObj;
 };
@@ -13,7 +14,7 @@ export const addNewItem = async (
     link: mylink,
     description: mydescription,
   };
-  await fetch(`https://finalproject-35asp3tk.b4a.run/user/${userName}/addItem/${Date.now()}`, {
+  await fetch(`${rootUrl}/user/${userName}/addItem/${Date.now()}`, {
     method: "POST",
     body: JSON.stringify(thisItem),
     headers: {
@@ -23,7 +24,7 @@ export const addNewItem = async (
 };
 
 export const getUserItems = async (userName: string | null) => {
-  const itemsPromise = await fetch(`https://finalproject-35asp3tk.b4a.run/${userName}/items`);
+  const itemsPromise = await fetch(`${rootUrl}/${userName}/items`);
   const itemsObj = await itemsPromise.json();
   return itemsObj;
 };

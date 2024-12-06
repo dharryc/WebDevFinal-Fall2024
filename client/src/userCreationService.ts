@@ -1,5 +1,6 @@
+import { rootUrl } from "./constants.js";
 export const makeUser = async (user: any) => {
-  await fetch("https://finalproject-35asp3tk.b4a.run/newUser", {
+  await fetch(`${rootUrl}/newUser`, {
     method: "POST",
     body: JSON.stringify(user),
     headers: {
@@ -9,7 +10,7 @@ export const makeUser = async (user: any) => {
 };
 
 export const userNameVerification = async (userName: string) => {
-  const userNameList = await fetch("https://finalproject-35asp3tk.b4a.run/userList");
+  const userNameList = await fetch(`${rootUrl}/userList`);
   const userNameObj = await userNameList.json();
   if (userNameObj.includes(userName.toLocaleLowerCase())) {
     return "That username already exists. Please contact Harry if the site is broken, or log in again with the same name";

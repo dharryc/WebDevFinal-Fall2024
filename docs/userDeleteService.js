@@ -1,5 +1,6 @@
+import { rootUrl } from "./constants.js";
 export const DeleteUser = async (username) => {
-    await fetch(`https://finalproject-35asp3tk.b4a.run/user/${username}/delete`, {
+    await fetch(`${rootUrl}/user/${username}/delete`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

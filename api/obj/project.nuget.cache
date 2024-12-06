@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "hnlFLesr0StzgDeykyHGezvzcPh3LXxCL2WoLVtz7XYyYO64O1XoTIcs0l50FkqUFB9rGrvhTsjhfHrX/4eZrA==",
+  "dgSpecHash": "olGLXYxLpwS+pNjyMlVSK9PhLkF8xZYT7JPTow3vygc2RkHrCkV4QqomagdrEBvCuhJBnGpB8z678a66cCR4gg==",
   "success": true,
   "projectFilePath": "C:\\Users\\dharr\\web dev\\WebDevFinal-Fall2024\\api\\api.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\dharr\\.nuget\\packages\\octokit\\13.0.1\\octokit.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

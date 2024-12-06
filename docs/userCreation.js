@@ -16,6 +16,7 @@ const makeForm = () => {
     submitButton.setAttribute("type", "submit");
     submitButton.setAttribute("value", "Create User");
     const statusText = document.createElement("p");
+    statusText.setAttribute("id", "statusText");
     const backToLogin = document.createElement("a");
     backToLogin.setAttribute("href", "loginPrototype.html");
     backToLogin.textContent = "Back to login page";
