@@ -19,7 +19,7 @@ if (!Directory.Exists(hashSetRoot))
 }
 else
 {
-    var myHashSetThing = File.ReadAllText(hashSetRoot);
+    var myHashSetThing = File.ReadAllText(hashSetRoot + "/hashObj.json");
     usersHash = JsonSerializer.Deserialize<HashSet<string>>(myHashSetThing);
 }
 
@@ -38,6 +38,7 @@ app.MapPost(
         {
             usersHash.Add(user.UserName);
             File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(usersHash));
+            allUsers.Add(user);
             await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(user));
             return "User successfuly created!";
         }
