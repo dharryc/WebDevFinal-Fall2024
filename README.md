@@ -28,9 +28,8 @@ Now, I don't think this is going to be easy, but I do think that it's something 
   - [ ] Add countdown timers for upcoming events (christmas, birthdays, etc.)
   - [x] Other users can mark items as purchased
 - Dec 4 (90%)
-  - [ ] Host site on cloud
-  - [ ] Host HTML/CSS/JS on non git server
-  - [ ] Impliment abiltiy for users to add a picture for item description
+  - [X] Host site on cloud
+  - [X] Host HTML/CSS/JS on non git server
 
 ---
 
