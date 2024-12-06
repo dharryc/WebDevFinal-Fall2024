@@ -15,36 +15,33 @@ var hashSetRoot = "./hash";
 HashSet<string>? usersHash = [];
 if (!Directory.Exists(hashSetRoot))
 {
-  Directory.CreateDirectory(hashSetRoot);
+    Directory.CreateDirectory(hashSetRoot);
 }
 else
 {
-  var myHashSetThing = File.ReadAllText(hashSetRoot);
-  usersHash = JsonSerializer.Deserialize<HashSet<string>>(myHashSetThing);
+    var myHashSetThing = File.ReadAllText(hashSetRoot);
+    usersHash = JsonSerializer.Deserialize<HashSet<string>>(myHashSetThing);
 }
 
 List<User>? allUsers = [];
 if (!Directory.Exists("./storage"))
-  Directory.CreateDirectory("./storage");
+    Directory.CreateDirectory("./storage");
 else
 {
-  allUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(storageRoot));
+    allUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(storageRoot));
 }
 app.MapPost(
     "/newUser",
     async (User user) =>
     {
-      if (!usersHash.Contains(user.UserName))
-      {
-        usersHash.Add(user.UserName);
-        File.WriteAllText(
-            hashSetRoot + "/hashObj.json",
-            JsonSerializer.Serialize(usersHash)
-        );
-        await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(user));
-        return "User successfuly created!";
-      }
-      return "That user already exists. If Harry broke something, please let him know";
+        if (!usersHash.Contains(user.UserName))
+        {
+            usersHash.Add(user.UserName);
+            File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(usersHash));
+            await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(user));
+            return "User successfuly created!";
+        }
+        return "That user already exists. If Harry broke something, please let him know";
     }
 );
 
@@ -52,9 +49,9 @@ app.MapGet(
     "/userList",
     () =>
     {
-      string[]? myUsers = new string[usersHash.Count()];
-      usersHash.CopyTo(myUsers);
-      return myUsers;
+        string[]? myUsers = new string[usersHash.Count()];
+        usersHash.CopyTo(myUsers);
+        return myUsers;
     }
 );
 
@@ -62,17 +59,7 @@ app.MapGet(
     "/user/{userName}",
     (string userName) =>
     {
-      var userFolder = userName;
-      var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
-
-      if (!File.Exists(userDirectory))
-        throw new Exception("User not found.");
-
-      var user = JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory));
-      if (user == null)
-        throw new Exception("user not found");
-
-      return user;
+        return allUsers?.Find(u => u.UserName == userName);
     }
 );
 
@@ -80,23 +67,13 @@ app.MapPost(
     "/user/{userName}/addItem/{newItemId}",
     async (ulong newItemId, string userName, Item newItem) =>
     {
-      var userFolder = userName;
-      var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
-      // ulong itemId = 129438235;
-      // Item thisthing = currentUser.Items[itemId];
-
-      if (!File.Exists(userDirectory))
-        throw new Exception("User not found.");
-
-      User? currentUser =
-          JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory))
-          ?? throw new Exception("user not found");
-      currentUser.Items ??= [];
-      newItem.Purchased = false;
-      currentUser.Items.Add(newItemId, newItem);
-      var userPath = Path.Combine(storageRoot, userName);
-      var userFile = Path.Combine(userPath, "user.json");
-      await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(currentUser));
+        int i = 1300000;
+        int? index = allUsers?.FindIndex(u => u.UserName == userName);
+        if (index != null) i = (int)index;
+        allUsers.ElementAt(i).Items ??= [];
+        newItem.Purchased = false;
+        allUsers?.ElementAt(i).Items?.Add(newItemId, newItem);
+        await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
     }
 );
 
@@ -104,15 +81,11 @@ app.MapDelete(
     "/user/{userName}/delete",
     (string userName) =>
     {
-      if (!usersHash.Contains(userName))
-      {
-        throw new Exception("User not found");
-      }
-      var userFolder = userName;
-      var userFile = Path.Combine(storageRoot, userName);
-      usersHash.Remove(userName);
-      File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(usersHash));
-      Directory.Delete(userFile, true);
+        if (!usersHash.Contains(userName))
+        {
+            throw new Exception("User not found");
+        }
+        allUsers?.Remove(allUsers.Find(u => u.UserName == userName));
     }
 );
 
@@ -120,15 +93,8 @@ app.MapGet(
     "/{userName}/items",
     (string userName) =>
     {
-      var userFolder = userName;
-      var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
-
-      if (!File.Exists(userDirectory))
-        throw new Exception("User not found.");
-      User? currentUser =
-          JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory))
-          ?? throw new Exception("user not found");
-      return currentUser.Items?.ToArray();
+        User? user = allUsers?.Find(u => u.UserName == userName);
+        return user?.Items?.ToArray();
     }
 );
 
@@ -136,20 +102,9 @@ app.MapGet(
     "/{userName}/{itemId}",
     async (string userName, ulong itemId) =>
     {
-      var userFolder = userName;
-      var userDirectory = Path.Combine(storageRoot, userFolder, "user.json");
-
-      if (!File.Exists(userDirectory))
-        throw new Exception("User not found.");
-      User currentUser =
-          JsonSerializer.Deserialize<User>(File.ReadAllText(userDirectory))
-          ?? throw new Exception("user not found");
-      Console.WriteLine(currentUser);
-      currentUser.Items[itemId].Purchased = !currentUser.Items[itemId].Purchased;
-      var userPath = Path.Combine(storageRoot, userName);
-      var userFile = Path.Combine(userPath, "user.json");
-      await File.WriteAllTextAsync(userFile, JsonSerializer.Serialize(currentUser));
-      Console.WriteLine(currentUser.Items[itemId].Purchased);
+        int index = allUsers.FindIndex(u => u.UserName == userName);
+        allUsers.ElementAt(index).Items[itemId].Purchased = !allUsers.ElementAt(index).Items[itemId].Purchased;
+        await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
     }
 );
 
@@ -157,7 +112,7 @@ app.MapGet(
     "/allUsers",
     () =>
     {
-      return allUsers;
+        return allUsers;
     }
 );
 
@@ -165,14 +120,14 @@ app.Run();
 
 public record Item
 {
-  public string? Link { get; set; }
-  public string? Description { get; set; }
-  public bool Purchased { get; set; }
+    public string? Link { get; set; }
+    public string? Description { get; set; }
+    public bool Purchased { get; set; }
 };
 
 public record User
 {
-  public string? UserName { get; init; }
-  public Dictionary<ulong, Item>? Items { get; set; }
-  public ulong Id { get; init; }
+    public string? UserName { get; init; }
+    public Dictionary<ulong, Item>? Items { get; set; }
+    public ulong Id { get; init; }
 }
