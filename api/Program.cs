@@ -14,6 +14,7 @@ var owner = "dharryc";
 var repo = "WebDevFinal-Fall2024";
 var branch = "main";
 var targetFile = "./api/storage/users.json";
+var hashTargetFile = "./api/hash/hashObj.json";
 
 var app = builder.Build();
 app.UseCors(c =>
@@ -54,6 +55,43 @@ app.MapPost(
         {
             usersHash.Add(user.UserName);
             File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(usersHash));
+            try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    hashTargetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    hashTargetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(hashSetRoot + "/hashObj.json"),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
             allUsers.Add(user);
             await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
             try
@@ -126,6 +164,43 @@ app.MapPost(
         newItem.Purchased = false;
         allUsers?.ElementAt(index).Items?.Add(newItemId, newItem);
         await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+        try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(storageRoot),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
     }
 );
 
@@ -136,6 +211,43 @@ app.MapPost(
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items[newItemId].MoreDetails = details;
         await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+        try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(storageRoot),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
     }
 );
 
@@ -149,6 +261,43 @@ app.MapDelete(
         }
         allUsers?.Remove(allUsers.Find(u => u.UserName == userName));
         await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+        try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(storageRoot),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
     }
 );
 app.MapDelete(
@@ -158,6 +307,43 @@ app.MapDelete(
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items.Remove(itemId);
         await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+        try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(storageRoot),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
     }
 );
 
@@ -177,6 +363,43 @@ app.MapGet(
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items[itemId].Purchased = !allUsers.ElementAt(index).Items[itemId].Purchased;
         await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+        try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(storageRoot),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
     }
 );
 
