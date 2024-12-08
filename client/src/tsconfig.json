@@ -14,7 +14,7 @@
   },
   "include": [
     "*.ts"                      // Include all TypeScript files under the src folder
-  ],
+, "userService/.ts"  ],
   "exclude": [
     "node_modules"                     // Exclude node_modules folder from compilation
   ]

@@ -1,18 +1,34 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Octokit;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors();
+var ghClient = new GitHubClient(new ProductHeaderValue("GithubCommit"));
+string? githubToken = Environment.GetEnvironmentVariable("TOKEN");
+Console.WriteLine(githubToken);
+ghClient.Credentials = new Credentials(githubToken);
+
+// github variables
+var owner = "dharryc";
+var repo = "WebDevFinal-Fall2024";
+var branch = "main";
+var targetFile = "./api/storage/users.json";
 
 var app = builder.Build();
-app.UseCors(c => c.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+app.UseCors(c =>
+{
+    c.AllowAnyHeader();
+    c.AllowAnyMethod();
+    c.AllowAnyOrigin();
+});
 
 app.MapGet("/", () => "MY API IS RUNNING!!!!");
 
 var storageRoot = "./storage/users.json";
 var hashSetRoot = "./hash";
 
-HashSet<string>? usersHash = [];
+HashSet<string> usersHash = [];
 if (!Directory.Exists(hashSetRoot))
 {
     Directory.CreateDirectory(hashSetRoot);
@@ -23,7 +39,7 @@ else
     usersHash = JsonSerializer.Deserialize<HashSet<string>>(myHashSetThing);
 }
 
-List<User>? allUsers = [];
+List<User> allUsers = [];
 if (!Directory.Exists("./storage"))
     Directory.CreateDirectory("./storage");
 else
@@ -39,7 +55,44 @@ app.MapPost(
             usersHash.Add(user.UserName);
             File.WriteAllText(hashSetRoot + "/hashObj.json", JsonSerializer.Serialize(usersHash));
             allUsers.Add(user);
-            await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(user));
+            await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+            try
+            {
+                // try to get the file (and with the file the last commit sha)
+                var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
+
+                // update the file
+                var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new UpdateFileRequest(
+                        "API updated users",
+                        File.ReadAllText(storageRoot),
+                        existingFile.First().Sha,
+                        branch
+                    )
+                );
+            }
+            catch (Octokit.NotFoundException)
+            {
+                // if file is not found, create it
+                var createChangeSet = await ghClient.Repository.Content.CreateFile(
+                    owner,
+                    repo,
+                    targetFile,
+                    new CreateFileRequest(
+                        "API File creation",
+                        "Hello Universe! " + DateTime.UtcNow,
+                        branch
+                    )
+                );
+            }
             return "User successfuly created!";
         }
         return "That user already exists. If Harry broke something, please let him know";
@@ -68,25 +121,43 @@ app.MapPost(
     "/user/{userName}/addItem/{newItemId}",
     async (ulong newItemId, string userName, Item newItem) =>
     {
-        int i = 1300000;
-        int? index = allUsers?.FindIndex(u => u.UserName == userName);
-        if (index != null) i = (int)index;
-        allUsers.ElementAt(i).Items ??= [];
+        int index = allUsers.FindIndex(u => u.UserName == userName);
+        allUsers.ElementAt(index).Items ??= [];
         newItem.Purchased = false;
-        allUsers?.ElementAt(i).Items?.Add(newItemId, newItem);
+        allUsers?.ElementAt(index).Items?.Add(newItemId, newItem);
+        await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+    }
+);
+
+app.MapPost(
+    "/{userName}/{newItemId}/addDetails",
+    async (ulong newItemId, string userName, [FromBody] string details) =>
+    {
+        int index = allUsers.FindIndex(u => u.UserName == userName);
+        allUsers.ElementAt(index).Items[newItemId].MoreDetails = details;
         await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
     }
 );
 
 app.MapDelete(
     "/user/{userName}/delete",
-    (string userName) =>
+    async (string userName) =>
     {
         if (!usersHash.Contains(userName))
         {
             throw new Exception("User not found");
         }
         allUsers?.Remove(allUsers.Find(u => u.UserName == userName));
+        await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
+    }
+);
+app.MapDelete(
+    "/{userName}/{itemId}/deleteItem",
+    async (string userName, ulong itemId) =>
+    {
+        int index = allUsers.FindIndex(u => u.UserName == userName);
+        allUsers.ElementAt(index).Items.Remove(itemId);
+        await File.WriteAllTextAsync(storageRoot, JsonSerializer.Serialize(allUsers));
     }
 );
 
@@ -124,6 +195,7 @@ public record Item
     public string? Link { get; set; }
     public string? Description { get; set; }
     public bool Purchased { get; set; }
+    public string? MoreDetails { get; set; }
 };
 
 public record User

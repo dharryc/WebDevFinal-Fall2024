@@ -51,7 +51,7 @@ activeUser.items?.forEach((item) => {
     CardMaker(item.value.link, item.value.description);
 });
 const familyList = document.getElementById("familyList");
-familyList?.setAttribute("href", `https://dharryc.github.io/WebDevFinal-Fall2024/familyListPagePrototype.html?user=${activeUser.userName}`);
+familyList?.setAttribute("href", `./familyListPagePrototype.html?user=${activeUser.userName}`);
 const userList = document.getElementById("userList");
-userList?.setAttribute("href", `https://dharryc.github.io/WebDevFinal-Fall2024/userListPagePrototype.html?user=${activeUser.userName}`);
+userList?.setAttribute("href", `./userListPagePrototype.html?user=${activeUser.userName}`);
 //# sourceMappingURL=serviceTest.js.map

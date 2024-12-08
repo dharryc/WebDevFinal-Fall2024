@@ -30,7 +30,7 @@ File.WriteAllText("../../docs/userCreationPrototype.html", userCreationPrototype
 var userListPagePrototype = baseTemplate;
 userListPagePrototype = userListPagePrototype.Replace(loginKey, userListTemplate);
 userListPagePrototype = userListPagePrototype.Replace("Document", "Add Item");
-userListPagePrototype = userListPagePrototype.Replace(js, "./serviceTest.js");
+userListPagePrototype = userListPagePrototype.Replace(js, "./userUi.js");
 userListPagePrototype = userListPagePrototype.Replace(navKey, navTemplate);
 userListPagePrototype = userListPagePrototype.Replace(contentKey, pageContentTemplate);
 File.WriteAllText("../../docs/userListPagePrototype.html", userListPagePrototype);

@@ -23,7 +23,7 @@
     align-items: center;
 }
 
-#pageContent{
+#pageContent {
     display: flex;
     flex-direction: column;
     overflow: scroll;
@@ -42,17 +42,30 @@
 #form {
     margin-top: 5em;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
 }
 
 #itemForm {
     display: flex;
     flex-direction: column;
+    margin-right: 2em;
 }
 
 #itemForm label,
 button {
     margin-top: .5em;
+}
+
+#dateForm label,
+button {
+    margin-top: .5em;
+}
+
+#dateForm {
+    display: flex;
+    flex-direction: column;
 }
 
 #newUserForm {
@@ -97,7 +110,10 @@ a:active {
     margin-bottom: .5em;
 }
 
-.itemCard{
+.itemCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     border: solid;
     border-color: var(--text-color);
     border-style: solid;
@@ -105,4 +121,8 @@ a:active {
     margin: .5em;
     padding: .75em;
     text-align: center;
+}
+
+.purchased {
+    background-color: darkblue;
 }

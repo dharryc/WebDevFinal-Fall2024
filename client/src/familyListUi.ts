@@ -10,8 +10,10 @@ const CardMaker = (
   description: string,
   id: number,
   userNode: HTMLDivElement,
-  userName: string
+  userName: string,
+  purchased: boolean
 ) => {
+  var beenPurchased = purchased;
   const itemId = id;
   const parentUserName = userName;
   const cardWrapperNode = document.createElement("div");
@@ -27,7 +29,14 @@ const CardMaker = (
   purchaseButton.addEventListener("click", async (ev) => {
     ev.preventDefault();
     await togglePurchase(id, parentUserName);
-    purchaseButton.textContent = "Remove purchased status";
+    beenPurchased = !beenPurchased;
+    if (beenPurchased) {
+      purchaseButton.textContent = "Remove purchased status";
+      cardWrapperNode.classList.add("purchased");
+    } else{
+      purchaseButton.textContent = "Mark as purchased";
+      cardWrapperNode.classList.remove("purchased")
+    } 
   });
 
   cardWrapperNode.append(linkNode, purchaseButton);
@@ -49,7 +58,8 @@ const GenerateList = () => {
           item.value.description,
           item.key,
           userNode,
-          user.userName
+          user.userName,
+          item.purchased
         );
       });
       contentNode?.append(userNode);
@@ -62,10 +72,10 @@ GenerateList();
 const familyList = document.getElementById("familyList");
 familyList?.setAttribute(
   "href",
-  `https://dharryc.github.io/WebDevFinal-Fall2024/familyListPagePrototype.html?user=${activeUserName}`
+  `./familyListPagePrototype.html?user=${activeUserName}`
 );
 const userList = document.getElementById("userList");
 userList?.setAttribute(
   "href",
-  `https://dharryc.github.io/WebDevFinal-Fall2024/userListPagePrototype.html?user=${activeUserName}`
+  `./userListPagePrototype.html?user=${activeUserName}`
 );

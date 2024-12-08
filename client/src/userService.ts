@@ -8,13 +8,14 @@ export const currentUser = async (userName: string | null) => {
 export const addNewItem = async (
   mylink: string,
   mydescription: string,
-  userName: string
+  userName: string | null,
+  id: number
 ) => {
   const thisItem = {
     link: mylink,
     description: mydescription,
   };
-  await fetch(`${rootUrl}/user/${userName}/addItem/${Date.now()}`, {
+  await fetch(`${rootUrl}/user/${userName}/addItem/${id}`, {
     method: "POST",
     body: JSON.stringify(thisItem),
     headers: {
@@ -27,4 +28,13 @@ export const getUserItems = async (userName: string | null) => {
   const itemsPromise = await fetch(`${rootUrl}/${userName}/items`);
   const itemsObj = await itemsPromise.json();
   return itemsObj;
+};
+
+export const deleteItem = async (userName: string | null, itemId: any) => {
+  await fetch(`${rootUrl}/${userName}/${itemId}/deleteItem`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 };
