@@ -39,14 +39,11 @@ In order to get the required 25 points for the hard parts of the project, my fir
   - [X] Uploading, storing, and using files on a custom api (15pts)
   - [X] Typescript (10pts)
   - [X] And, though ambitious, I hope to write a static site generator (provided I actually understand what that means, 25pts)
-  - [ ] Host API on cloud server (10pts)
+  - [X] Host API on cloud server (10pts)
+  - [X] Make it mobile responsive (8pts)
 
-This already gets me to the required 25 points, however, in addition, I plan to use:
 
-  - [ ] Work with audio / video files (8pts)
-  - [ ] Make it mobile responsive (8pts)
-
-These combined get me another 62 points, which should be PLENTY.
+These combined get me 83 points, which should be PLENTY.
 
 Honestly, I'm really excited for this assignment. I think it's going to be really cool to impliment a simple site running for my family. I think it will provide useful services to my family, and as time goes on, I'll be able to keep updating it to make it better with every class I take.
 
