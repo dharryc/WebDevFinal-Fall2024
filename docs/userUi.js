@@ -100,7 +100,7 @@ const existingCountDown = () => {
 };
 formMaker();
 countDownAdder();
-existingCountDown();
+// existingCountDown();
 const cardGenerator = async () => {
     document.getElementById("pageContent")?.replaceChildren();
     const activeUser = (await currentUser(activeUserName));
