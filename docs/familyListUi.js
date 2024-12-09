@@ -46,7 +46,7 @@ const GenerateList = () => {
                 user.userName.charAt(0).toUpperCase() + user.userName.slice(1);
             userNode.append(userTitle);
             user.items.forEach((item) => {
-                CardMaker(item.value.link, item.value.description, item.key, userNode, user.userName, item.purchased);
+                CardMaker(item.value.link, item.value.description, item.key, userNode, user.userName, item.value.purchased);
             });
             contentNode?.append(userNode);
         }

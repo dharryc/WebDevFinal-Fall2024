@@ -63,7 +63,7 @@ const GenerateList = () => {
           item.key,
           userNode,
           user.userName,
-          item.purchased
+          item.value.purchased
         );
       });
       contentNode?.append(userNode);
