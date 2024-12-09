@@ -13,7 +13,12 @@ const CardMaker = (link, description, id, userNode, userName, purchased) => {
     linkNode.textContent = description;
     linkNode.setAttribute("href", link);
     const purchaseButton = document.createElement("button");
-    purchaseButton.textContent = "Mark as purchased";
+    if (!beenPurchased)
+        purchaseButton.textContent = "Mark as purchased";
+    else {
+        purchaseButton.textContent = "Remove purchased status";
+        cardWrapperNode.classList.add("purchased");
+    }
     purchaseButton.addEventListener("click", async (ev) => {
         ev.preventDefault();
         await togglePurchase(id, parentUserName);
