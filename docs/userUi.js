@@ -69,37 +69,40 @@ const countDownAdder = () => {
     dayLabel.textContent = "Set countdown date: ";
     const submitButton = document.createElement("button");
     submitButton.textContent = "Confirm date";
+    submitButton.addEventListener("click", (ev) => {
+        console.log(dayPicker.valueAsNumber);
+        existingCountDown(dayPicker.valueAsNumber);
+    });
     countDownForm.append(dayLabel, dayPicker, submitButton);
     document.getElementById("form")?.append(countDownForm);
 };
-// const existingCountDown = () =>{
-//   const dateWrapperNode = document.createElement("section")
-//   // Set the date we're counting down to
-//   var countDownDate = new Date("Jan 5, 2030 15:37:25").getTime();
-//   // Update the count down every 1 second
-//   var x = setInterval(function() {
-//     // Get today's date and time
-//     var now = new Date().getTime();
-//     // Find the distance between now and the count down date
-//     var distance = countDownDate - now;
-//     // Time calculations for days, hours, minutes and seconds
-//     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-//     var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-//     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-//     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-//     // Output the result in an element with id="demo"
-//     dateWrapperNode.textContent = days + "d " + hours + "h "
-//     + minutes + "m " + seconds + "s ";
-//     // If the count down is over, write some text 
-//     if (distance < 0) {
-//       clearInterval(x);
-//       dateWrapperNode.textContent = "EXPIRED";
-//     }
-//   }, 1000);
-//   document.getElementById("form")?.append(dateWrapperNode);
-// }
+const existingCountDown = (countDownDate) => {
+    const dateWrapperNode = document.createElement("section");
+    // Set the date we're counting down to;
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+        // Get today's date and time
+        var now = new Date().getTime();
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        // Output the result in an element with id="demo"
+        dateWrapperNode.textContent =
+            days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        // If the count down is over, write some text
+        if (distance < 0) {
+            clearInterval(x);
+            dateWrapperNode.textContent = "EXPIRED";
+        }
+    }, 1000);
+    document.getElementById("form")?.append(dateWrapperNode);
+};
 formMaker();
-// countDownAdder();
+countDownAdder();
 // existingCountDown();
 const cardGenerator = async () => {
     document.getElementById("pageContent")?.replaceChildren();

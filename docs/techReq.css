@@ -1,0 +1,59 @@
+:root {
+    --background: hsl(249, 9%, 15%);
+    background-color: var(--background);
+    --text-color: hsl(0, 0%, 100%);
+    color: var(--text-color);
+}
+
+#imgAndAside {
+    display: flex;
+    flex-direction: row;
+}
+
+a {
+    background-color: blueviolet;
+    transition: .5s;
+}
+
+a:hover {
+    background-color: var(--background);
+}
+
+#nthChildStuff li:nth-child(odd) {
+    background-color: blue;
+}
+
+#imgAndAside img {
+    display: flex;
+    flex-direction: row;
+    margin: 2em;
+    border: solid;
+    border-color: greenyellow;
+    border-width: 2em;
+    border-style: double;
+    border-radius: 2em;
+}
+
+#formReqs {
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+}
+
+#reqList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#link {
+    color: whitesmoke;
+}
+
+#figs img {
+    max-width: 15em;
+}
+
+#notStandard {
+    accent-color: red;
+}

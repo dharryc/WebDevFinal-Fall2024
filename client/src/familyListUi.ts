@@ -49,24 +49,26 @@ const CardMaker = (
 const GenerateList = () => {
   const contentNode = document.getElementById("pageContent");
   myFam.forEach((user: any) => {
-    if (user.userName != activeUserName) {
-      const userNode = document.createElement("div");
-      userNode.setAttribute("id", user.userName);
-      const userTitle = document.createElement("h2");
-      userTitle.textContent =
-        user.userName.charAt(0).toUpperCase() + user.userName.slice(1);
-      userNode.append(userTitle);
-      user.items.forEach((item: any) => {
-        CardMaker(
-          item.value.link,
-          item.value.description,
-          item.key,
-          userNode,
-          user.userName,
-          item.value.purchased
-        );
-      });
-      contentNode?.append(userNode);
+    if (user.items != null) {
+      if (user.userName != activeUserName) {
+        const userNode = document.createElement("div");
+        userNode.setAttribute("id", user.userName);
+        const userTitle = document.createElement("h2");
+        userTitle.textContent =
+          user.userName.charAt(0).toUpperCase() + user.userName.slice(1);
+        userNode.append(userTitle);
+        user.items.forEach((item: any) => {
+          CardMaker(
+            item.value.link,
+            item.value.description,
+            item.key,
+            userNode,
+            user.userName,
+            item.value.purchased
+          );
+        });
+        contentNode?.append(userNode);
+      }
     }
   });
 };

@@ -241,6 +241,30 @@ app.MapGet(
     }
 );
 
+app.MapPost("/{userName}/{birthDay}/setBirthday", async (string userName, ulong birthDay) =>
+{
+    int index = allUsers.FindIndex(u => u.UserName == userName);
+    allUsers.ElementAt(index).BirthDay = birthDay;
+    File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
+    var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+        owner,
+        repo,
+        targetFile,
+        branch
+    );
+    var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+        owner,
+        repo,
+        targetFile,
+        new UpdateFileRequest(
+            "API updated users",
+            JsonSerializer.Serialize(allUsers),
+            existingFile.First().Sha,
+            branch
+        )
+    );
+});
+
 app.Run();
 
 public record Item
@@ -249,6 +273,7 @@ public record Item
     public string? Description { get; set; }
     public bool Purchased { get; set; }
     public string? MoreDetails { get; set; }
+    public string? Priority = "Default";
 };
 
 public record User
@@ -256,4 +281,5 @@ public record User
     public string? UserName { get; init; }
     public Dictionary<ulong, Item>? Items { get; set; }
     public ulong Id { get; init; }
+    public ulong? BirthDay { get; set; }
 }
