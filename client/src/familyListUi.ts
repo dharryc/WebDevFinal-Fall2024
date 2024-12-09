@@ -25,7 +25,11 @@ const CardMaker = (
   linkNode.setAttribute("href", link);
 
   const purchaseButton = document.createElement("button");
-  purchaseButton.textContent = "Mark as purchased";
+  if (!beenPurchased) purchaseButton.textContent = "Mark as purchased";
+  else {
+    purchaseButton.textContent = "Remove purchased status";
+    cardWrapperNode.classList.add("purchased");
+  }
   purchaseButton.addEventListener("click", async (ev) => {
     ev.preventDefault();
     await togglePurchase(id, parentUserName);
@@ -33,10 +37,10 @@ const CardMaker = (
     if (beenPurchased) {
       purchaseButton.textContent = "Remove purchased status";
       cardWrapperNode.classList.add("purchased");
-    } else{
+    } else {
       purchaseButton.textContent = "Mark as purchased";
-      cardWrapperNode.classList.remove("purchased")
-    } 
+      cardWrapperNode.classList.remove("purchased");
+    }
   });
 
   cardWrapperNode.append(linkNode, purchaseButton);
