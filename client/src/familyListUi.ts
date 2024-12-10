@@ -7,6 +7,24 @@ const activeUserName = userNameInUrl.get("user");
 const parentNode = document.getElementById("pageContent");
 const contentNode = document.createElement("div");
 
+const existingCountDown = (countDownDate: number) => {
+  const dateWrapperNode = document.createElement("h4");
+
+  const x = setInterval(function () {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+
+    dateWrapperNode.textContent =
+      days + "d " + hours + "h " + "until birthday";
+  }, 1000);
+  return dateWrapperNode;
+};
+
 const CardMaker = (
   link: string,
   description: string,
@@ -48,6 +66,7 @@ const CardMaker = (
   cardWrapperNode.append(linkNode, purchaseButton);
   userNode.append(cardWrapperNode);
 };
+
 const GenerateList = (familyList: any[]) => {
   contentNode.replaceChildren();
   familyList.forEach((user: any) => {
@@ -59,6 +78,10 @@ const GenerateList = (familyList: any[]) => {
         userTitle.textContent =
           user.userName.charAt(0).toUpperCase() + user.userName.slice(1);
         userNode.append(userTitle);
+        if (user.birthDay != null) {
+          console.log("here");
+          userNode.append(existingCountDown(user.birthDay));
+        }
         user.items.forEach((item: any) => {
           CardMaker(
             item.value.link,

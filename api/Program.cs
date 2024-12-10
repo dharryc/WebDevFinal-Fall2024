@@ -16,6 +16,7 @@ var repo = "WebDevFinal-Fall2024";
 var branch = "main";
 var targetFile = "./api/storage/users.json";
 var storageRoot = "./storage/users.json";
+var workingLocally = true;
 
 var app = builder.Build();
 app.UseCors(c =>
@@ -35,24 +36,28 @@ else
 
 async Task pushToRepo()
 {
-    var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-                owner,
-                repo,
-                targetFile,
-                branch
-            );
+    if (workingLocally)
+    {
+        File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
+        var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                    owner,
+                    repo,
+                    targetFile,
+                    branch
+                );
 
-    var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-        owner,
-        repo,
-        targetFile,
-        new UpdateFileRequest(
-            "API updated users",
-            JsonSerializer.Serialize(allUsers),
-            existingFile.First().Sha,
-            branch
-        )
-    );
+        var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+            owner,
+            repo,
+            targetFile,
+            new UpdateFileRequest(
+                "API updated users",
+                JsonSerializer.Serialize(allUsers),
+                existingFile.First().Sha,
+                branch
+            )
+        );
+    }
     return;
 }
 
@@ -63,7 +68,6 @@ app.MapPost(
         if (allUsers.FindIndex(u => u.UserName == user.UserName) == -1)
         {
             allUsers.Add(user);
-            File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
             await pushToRepo();
         }
     }
@@ -95,7 +99,6 @@ app.MapPost(
         allUsers.ElementAt(index).Items ??= [];
         newItem.Purchased = false;
         allUsers?.ElementAt(index).Items?.Add(newItemId, newItem);
-        File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
         await pushToRepo();
     }
 );
@@ -106,7 +109,6 @@ app.MapPost(
     {
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items[newItemId].MoreDetails = details;
-        File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
         await pushToRepo();
     }
 );
@@ -120,7 +122,6 @@ app.MapDelete(
             throw new Exception("User not found");
         }
         allUsers?.Remove(allUsers.Find(u => u.UserName == userName));
-        File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
         await pushToRepo();
     }
 );
@@ -130,7 +131,6 @@ app.MapDelete(
     {
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items.Remove(itemId);
-        File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
         await pushToRepo();
     }
 );
@@ -150,7 +150,6 @@ app.MapGet(
     {
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items[itemId].Purchased = !allUsers.ElementAt(index).Items[itemId].Purchased;
-        File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
         await pushToRepo();
     }
 );
@@ -168,7 +167,6 @@ app.MapPost("/{userName}/{birthDay}/setBirthday", async (string userName, ulong 
     int index = allUsers.FindIndex(u => u.UserName == userName);
     allUsers.ElementAt(index).BirthDay = birthDay;
     Console.WriteLine(allUsers.ElementAt(index).BirthDay);
-    File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
     await pushToRepo();
 });
 
