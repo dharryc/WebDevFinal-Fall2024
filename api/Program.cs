@@ -167,6 +167,7 @@ app.MapPost("/{userName}/{birthDay}/setBirthday", async (string userName, ulong 
 {
     int index = allUsers.FindIndex(u => u.UserName == userName);
     allUsers.ElementAt(index).BirthDay = birthDay;
+    Console.WriteLine(allUsers.ElementAt(index).BirthDay);
     File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
     await pushToRepo();
 });
