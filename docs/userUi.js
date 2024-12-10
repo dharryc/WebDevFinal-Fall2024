@@ -66,13 +66,15 @@ const countDownAdder = () => {
     dayPicker.setAttribute("name", "eventDate");
     const dayLabel = document.createElement("label");
     dayLabel.setAttribute("for", "eventDate");
-    dayLabel.textContent = "Set countdown date: ";
+    dayLabel.textContent = "Set birthday: ";
     const submitButton = document.createElement("button");
     submitButton.textContent = "Confirm date";
+    const confirmationParagraph = document.createElement("p");
     submitButton.addEventListener("click", async (ev) => {
         await addDate(activeUserName, dayPicker.valueAsNumber);
+        confirmationParagraph.textContent = "Birthday added!";
     });
-    countDownForm.append(dayLabel, dayPicker, submitButton);
+    countDownForm.append(dayLabel, dayPicker, submitButton, confirmationParagraph);
     document.getElementById("form")?.append(countDownForm);
 };
 formMaker();
