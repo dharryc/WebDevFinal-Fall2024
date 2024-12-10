@@ -1,7 +1,14 @@
 :root {
     --background: hsl(249, 9%, 15%);
-    background-color: var(--background);
     --text-color: hsl(0, 0%, 100%);
+    --blue: hsl(240, 100%, 50%);
+    --blueviolet: hsl(271, 76%, 53%);
+    --gold: hsl(51, 100%, 50%);
+    --purple: hsl(300, 100%, 25%);
+    --greenyellow: hsl(84, 100%, 59%);
+    --whitesmoke: hsl(0, 0%, 96%);
+    --red: hsl(0, 100%, 50%);
+    background-color: var(--background);
     color: var(--text-color);
 }
 
@@ -11,7 +18,7 @@
 }
 
 a {
-    background-color: blueviolet;
+    background-color: var(--blueviolet);
     transition: .5s;
 }
 
@@ -20,11 +27,11 @@ a:hover {
 }
 
 #nthChildStuff li:nth-child(odd) {
-    background-color: blue;
+    background-color: var(--blue);
 }
 
 #deleteIt {
-    background-color: gold;
+    background-color: var(--gold);
     min-width: 15em;
     min-height: 15em;
     max-width: 15em;
@@ -34,7 +41,7 @@ a:hover {
 #duplicateIt{
     display: flex;
     overflow: scroll;
-    background-color: gold;
+    background-color: var(--gold);
     min-width: 15em;
     min-height: 15em;
     max-width: 15em;
@@ -42,7 +49,7 @@ a:hover {
 }
 
 .thingToDragNDrop {
-    background-color: purple;
+    background-color: var(--purple);
     min-width: 10em;
     min-height: 10em;
     max-width: 10em;
@@ -54,7 +61,7 @@ a:hover {
     flex-direction: row;
     margin: 2em;
     border: solid;
-    border-color: greenyellow;
+    border-color: var(--greenyellow);
     border-width: 2em;
     border-style: double;
     border-radius: 2em;
@@ -73,7 +80,7 @@ a:hover {
 }
 
 #link {
-    color: whitesmoke;
+    color: var(--whitesmoke);
 }
 
 #figs img {
@@ -81,5 +88,5 @@ a:hover {
 }
 
 #notStandard {
-    accent-color: red;
+    accent-color: var(--red);
 }
