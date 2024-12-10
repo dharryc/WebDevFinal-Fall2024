@@ -58,11 +58,11 @@ const GenerateList = (familyList) => {
 };
 const makeFilter = () => {
     const filterWrapper = document.createElement("div");
+    filterWrapper.setAttribute("id", "filterBar");
     const filterLabel = document.createElement("label");
     filterLabel.setAttribute("for", "filterBar");
     filterLabel.textContent = "Search for person:";
     const filterInput = document.createElement("input");
-    filterInput.setAttribute("id", "filterBar");
     filterInput.setAttribute("type", "text");
     filterInput.addEventListener("input", () => {
         const filteredFamily = myFam.filter((u) => u.userName.includes(filterInput.value));
