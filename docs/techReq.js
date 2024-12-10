@@ -46,4 +46,7 @@ deleteNode?.addEventListener("drop", (ev) => {
     const thing = document.getElementById(thing1);
     duplicateNode?.removeChild(thing);
 });
+localStorage.setItem("thing", "Here's how you know I can do this!");
+const localStorageItem = localStorage.getItem("thing");
+console.log(localStorageItem);
 //# sourceMappingURL=techReq.js.map
