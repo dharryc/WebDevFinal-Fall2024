@@ -3,6 +3,7 @@ import {
   addNewItem,
   getUserItems,
   deleteItem,
+  addDate,
 } from "./userService.js";
 
 const userNameInUrl = new URLSearchParams(window.location.search);
@@ -107,16 +108,16 @@ const countDownAdder = () => {
   const submitButton = document.createElement("button");
   submitButton.textContent = "Confirm date";
 
-  submitButton.addEventListener("click", (ev) => {
-    console.log(dayPicker.valueAsNumber);
-    existingCountDown(dayPicker.valueAsNumber)
+  submitButton.addEventListener("click", async (ev) => {
+    // existingCountDown(dayPicker.valueAsNumber);
+    await addDate(activeUserName, dayPicker.valueAsNumber)
   });
 
   countDownForm.append(dayLabel, dayPicker, submitButton);
   document.getElementById("form")?.append(countDownForm);
 };
 
-const existingCountDown = (countDownDate: number ) => {
+const existingCountDown = (countDownDate: number) => {
   const dateWrapperNode = document.createElement("section");
   // Set the date we're counting down to;
 

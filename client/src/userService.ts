@@ -38,3 +38,12 @@ export const deleteItem = async (userName: string | null, itemId: any) => {
     },
   });
 };
+
+export const addDate = async (userName: string | null, birthDay: number) => {
+  await fetch(`${rootUrl}/${userName}/${birthDay}/setBirthday`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+};

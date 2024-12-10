@@ -30,4 +30,12 @@ export const deleteItem = async (userName, itemId) => {
         },
     });
 };
+export const addDate = async (userName, birthDay) => {
+    await fetch(`${rootUrl}/${userName}/${birthDay}/setBirthday`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+};
 //# sourceMappingURL=userService.js.map

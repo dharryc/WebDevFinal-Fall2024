@@ -1,4 +1,4 @@
-import { currentUser, addNewItem, getUserItems, deleteItem, } from "./userService.js";
+import { currentUser, addNewItem, getUserItems, deleteItem, addDate, } from "./userService.js";
 const userNameInUrl = new URLSearchParams(window.location.search);
 const activeUserName = userNameInUrl.get("user");
 const CardMaker = (link, description, id) => {
@@ -69,9 +69,9 @@ const countDownAdder = () => {
     dayLabel.textContent = "Set countdown date: ";
     const submitButton = document.createElement("button");
     submitButton.textContent = "Confirm date";
-    submitButton.addEventListener("click", (ev) => {
-        console.log(dayPicker.valueAsNumber);
-        existingCountDown(dayPicker.valueAsNumber);
+    submitButton.addEventListener("click", async (ev) => {
+        // existingCountDown(dayPicker.valueAsNumber);
+        await addDate(activeUserName, dayPicker.valueAsNumber);
     });
     countDownForm.append(dayLabel, dayPicker, submitButton);
     document.getElementById("form")?.append(countDownForm);
