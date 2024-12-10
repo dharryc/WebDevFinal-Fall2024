@@ -3,6 +3,8 @@ const unprocessedFam = await allUsers();
 const myFam = await getFamily(unprocessedFam);
 const userNameInUrl = new URLSearchParams(window.location.search);
 const activeUserName = userNameInUrl.get("user");
+const parentNode = document.getElementById("pageContent");
+const contentNode = document.createElement("div");
 const CardMaker = (link, description, id, userNode, userName, purchased) => {
     var beenPurchased = purchased;
     const itemId = id;
@@ -35,9 +37,9 @@ const CardMaker = (link, description, id, userNode, userName, purchased) => {
     cardWrapperNode.append(linkNode, purchaseButton);
     userNode.append(cardWrapperNode);
 };
-const GenerateList = () => {
-    const contentNode = document.getElementById("pageContent");
-    myFam.forEach((user) => {
+const GenerateList = (familyList) => {
+    contentNode.replaceChildren();
+    familyList.forEach((user) => {
         if (user.items != null) {
             if (user.userName != activeUserName) {
                 const userNode = document.createElement("div");
@@ -54,9 +56,26 @@ const GenerateList = () => {
         }
     });
 };
-GenerateList();
+const makeFilter = () => {
+    const filterWrapper = document.createElement("div");
+    const filterLabel = document.createElement("label");
+    filterLabel.setAttribute("for", "filterBar");
+    filterLabel.textContent = "Search for person:";
+    const filterInput = document.createElement("input");
+    filterInput.setAttribute("id", "filterBar");
+    filterInput.setAttribute("type", "text");
+    filterInput.addEventListener("input", () => {
+        const filteredFamily = myFam.filter((u) => u.userName.includes(filterInput.value));
+        GenerateList(filteredFamily);
+    });
+    filterWrapper.append(filterLabel, filterInput);
+    parentNode?.append(filterWrapper);
+};
 const familyList = document.getElementById("familyList");
 familyList?.setAttribute("href", `./familyListPagePrototype.html?user=${activeUserName}`);
 const userList = document.getElementById("userList");
 userList?.setAttribute("href", `./userListPagePrototype.html?user=${activeUserName}`);
+GenerateList(myFam);
+makeFilter();
+parentNode?.append(contentNode);
 //# sourceMappingURL=familyListUi.js.map

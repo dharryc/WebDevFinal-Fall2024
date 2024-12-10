@@ -23,6 +23,32 @@ a:hover {
     background-color: blue;
 }
 
+#deleteIt {
+    background-color: gold;
+    min-width: 15em;
+    min-height: 15em;
+    max-width: 15em;
+    max-height: 15em;
+}
+
+#duplicateIt{
+    display: flex;
+    overflow: scroll;
+    background-color: gold;
+    min-width: 15em;
+    min-height: 15em;
+    max-width: 15em;
+    max-height: 15em;
+}
+
+.thingToDragNDrop {
+    background-color: purple;
+    min-width: 10em;
+    min-height: 10em;
+    max-width: 10em;
+    max-height: 10em;
+}
+
 #imgAndAside img {
     display: flex;
     flex-direction: row;

@@ -46,7 +46,7 @@
             <option value="option6">option6</option>
           </select>
           <label for="reset">Reset button!</label>
-          <input type="reset" />
+          <input type="reset" id="reset"/>
           <label for="submit">Submit input:</label>
           <input type="submit" value="Submit!" id="submit" />
         </form>
@@ -112,7 +112,20 @@
           </li>
         </ol>
       </li>
-      <li></li>
+      <li>
+        <h3>Drag and Drop!</h3>
+        <div class="thingToDragNDrop" id="thingToDragNDrop">
+          Here's the thing
+        </div>
+      </li>
+      <li>
+        <h3>Drag here to make a unique copy!:</h3>
+        <div id="duplicateIt"></div>
+      </li>
+      <li>
+        <h3>Drag here to delete a unique copy:</h3>
+        <div id="deleteIt"></div>
+      </li>
     </ul>
   </body>
 </html>

@@ -126,3 +126,7 @@ a:active {
 .purchased {
     background-color: darkblue;
 }
+
+#filterBar{
+    margin-top: 2em;
+}
