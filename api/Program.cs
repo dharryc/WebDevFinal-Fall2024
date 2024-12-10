@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Octokit;
@@ -9,12 +10,12 @@ string? githubToken = Environment.GetEnvironmentVariable("TOKEN");
 Console.WriteLine(githubToken);
 ghClient.Credentials = new Credentials(githubToken);
 
-// github variables
+// variables
 var owner = "dharryc";
 var repo = "WebDevFinal-Fall2024";
 var branch = "main";
 var targetFile = "./api/storage/users.json";
-var hashTargetFile = "./api/hash/hashObj.json";
+var storageRoot = "./storage/users.json";
 
 var app = builder.Build();
 app.UseCors(c =>
@@ -24,10 +25,6 @@ app.UseCors(c =>
     c.AllowAnyOrigin();
 });
 
-app.MapGet("/", () => "MY API IS RUNNING!!!!");
-
-var storageRoot = "./storage/users.json";
-
 List<User> allUsers = [];
 if (!Directory.Exists("./storage"))
     Directory.CreateDirectory("./storage");
@@ -35,6 +32,30 @@ else
 {
     allUsers = JsonSerializer.Deserialize<List<User>>(File.ReadAllText(storageRoot));
 }
+
+async Task pushToRepo()
+{
+    var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
+                owner,
+                repo,
+                targetFile,
+                branch
+            );
+
+    var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
+        owner,
+        repo,
+        targetFile,
+        new UpdateFileRequest(
+            "API updated users",
+            JsonSerializer.Serialize(allUsers),
+            existingFile.First().Sha,
+            branch
+        )
+    );
+    return;
+}
+
 app.MapPost(
     "/newUser",
     async (User user) =>
@@ -43,26 +64,8 @@ app.MapPost(
         {
             allUsers.Add(user);
             File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-            var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-                owner,
-                repo,
-                targetFile,
-                branch
-            );
-            var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-                owner,
-                repo,
-                targetFile,
-                new UpdateFileRequest(
-                    "API updated users",
-                    JsonSerializer.Serialize(allUsers),
-                    existingFile.First().Sha,
-                    branch
-                )
-            );
-            return "User successfuly created!";
+            await pushToRepo();
         }
-        return "That user already exists. If Harry broke something, please let him know";
     }
 );
 
@@ -93,24 +96,7 @@ app.MapPost(
         newItem.Purchased = false;
         allUsers?.ElementAt(index).Items?.Add(newItemId, newItem);
         File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-        var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-            owner,
-            repo,
-            targetFile,
-            branch
-        );
-
-        var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-            owner,
-            repo,
-            targetFile,
-            new UpdateFileRequest(
-                "API updated users",
-                JsonSerializer.Serialize(allUsers),
-                existingFile.First().Sha,
-                branch
-            )
-        );
+        await pushToRepo();
     }
 );
 
@@ -121,23 +107,7 @@ app.MapPost(
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items[newItemId].MoreDetails = details;
         File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-        var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-            owner,
-            repo,
-            targetFile,
-            branch
-        );
-        var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-            owner,
-            repo,
-            targetFile,
-            new UpdateFileRequest(
-                "API updated users",
-                JsonSerializer.Serialize(allUsers),
-                existingFile.First().Sha,
-                branch
-            )
-        );
+        await pushToRepo();
     }
 );
 
@@ -151,23 +121,7 @@ app.MapDelete(
         }
         allUsers?.Remove(allUsers.Find(u => u.UserName == userName));
         File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-        var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-            owner,
-            repo,
-            targetFile,
-            branch
-        );
-        var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-            owner,
-            repo,
-            targetFile,
-            new UpdateFileRequest(
-                "API updated users",
-                JsonSerializer.Serialize(allUsers),
-                existingFile.First().Sha,
-                branch
-            )
-        );
+        await pushToRepo();
     }
 );
 app.MapDelete(
@@ -177,23 +131,7 @@ app.MapDelete(
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items.Remove(itemId);
         File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-        var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-            owner,
-            repo,
-            targetFile,
-            branch
-        );
-        var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-            owner,
-            repo,
-            targetFile,
-            new UpdateFileRequest(
-                "API updated users",
-                JsonSerializer.Serialize(allUsers),
-                existingFile.First().Sha,
-                branch
-            )
-        );
+        await pushToRepo();
     }
 );
 
@@ -213,23 +151,7 @@ app.MapGet(
         int index = allUsers.FindIndex(u => u.UserName == userName);
         allUsers.ElementAt(index).Items[itemId].Purchased = !allUsers.ElementAt(index).Items[itemId].Purchased;
         File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-        var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-            owner,
-            repo,
-            targetFile,
-            branch
-        );
-        var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-            owner,
-            repo,
-            targetFile,
-            new UpdateFileRequest(
-                "API updated users",
-                JsonSerializer.Serialize(allUsers),
-                existingFile.First().Sha,
-                branch
-            )
-        );
+        await pushToRepo();
     }
 );
 
@@ -246,23 +168,7 @@ app.MapPost("/{userName}/{birthDay}/setBirthday", async (string userName, ulong 
     int index = allUsers.FindIndex(u => u.UserName == userName);
     allUsers.ElementAt(index).BirthDay = birthDay;
     File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
-    var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(
-        owner,
-        repo,
-        targetFile,
-        branch
-    );
-    var updateChangeSet = await ghClient.Repository.Content.UpdateFile(
-        owner,
-        repo,
-        targetFile,
-        new UpdateFileRequest(
-            "API updated users",
-            JsonSerializer.Serialize(allUsers),
-            existingFile.First().Sha,
-            branch
-        )
-    );
+    await pushToRepo();
 });
 
 app.Run();
