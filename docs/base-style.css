@@ -163,6 +163,7 @@ a:active {
 
 input[type="text"],
 textarea {
+    outline: none;
     font-family: "Tinos", serif;
     background-color: var(--background-input);
     border-color: var(--background-input);
@@ -170,12 +171,14 @@ textarea {
 
 input[type="date"],
 textarea {
+    outline: none;
     font-family: "Tinos", serif;
     background-color: var(--background-input);
     border-color: var(--background-input);
 }
 
 textarea {
+    outline: none;
     font-family: "Tinos", serif;
     min-height: 4em;
     min-width: 80%;
