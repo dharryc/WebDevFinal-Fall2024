@@ -16,7 +16,7 @@ var repo = "WebDevFinal-Fall2024";
 var branch = "main";
 var targetFile = "./api/storage/users.json";
 var storageRoot = "./storage/users.json";
-var workingLocally = true;
+var workingLocally = false;
 
 var app = builder.Build();
 app.UseCors(c =>
@@ -36,7 +36,7 @@ else
 
 async Task pushToRepo()
 {
-    if (workingLocally)
+    if (!workingLocally)
     {
         File.WriteAllText(storageRoot, JsonSerializer.Serialize(allUsers));
         var existingFile = await ghClient.Repository.Content.GetAllContentsByRef(

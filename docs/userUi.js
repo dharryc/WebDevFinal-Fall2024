@@ -1,13 +1,15 @@
-import { currentUser, addNewItem, getUserItems, deleteItem, addDate, } from "./userService.js";
+import { currentUser, addNewItem, getUserItems, deleteItem, addDate, addMoreDescription, } from "./userService.js";
 const userNameInUrl = new URLSearchParams(window.location.search);
 const activeUserName = userNameInUrl.get("user");
-const CardMaker = (link, description, id) => {
+const CardMaker = (link, description, id, moreDetails) => {
     const contentNode = document.getElementById("pageContent");
     const cardWrapperNode = document.createElement("div");
     cardWrapperNode.setAttribute("id", id.toString());
     cardWrapperNode.classList.add("itemCard");
     const linkNode = document.createElement("a");
     linkNode.textContent = description;
+    const descriptionNode = document.createElement("p");
+    descriptionNode.textContent = moreDetails;
     linkNode.setAttribute("href", link);
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete Item";
@@ -16,7 +18,27 @@ const CardMaker = (link, description, id) => {
         await cardGenerator();
         contentNode?.removeChild(cardWrapperNode);
     });
-    cardWrapperNode.append(linkNode, deleteButton);
+    const descriptionBox = document.createElement("textarea");
+    const buttonWrapper = document.createElement("div");
+    buttonWrapper.setAttribute("id", "userButtons");
+    const longerDescriptionButton = document.createElement("button");
+    longerDescriptionButton.textContent = "Add description";
+    longerDescriptionButton.addEventListener("click", () => {
+        buttonWrapper.removeChild(longerDescriptionButton);
+        cardWrapperNode.append(descriptionBox);
+        cardWrapperNode.append(descriptionSubmissionButton);
+    });
+    const descriptionSubmissionButton = document.createElement("button");
+    descriptionSubmissionButton.textContent = "Confirm description";
+    descriptionSubmissionButton.addEventListener("click", async () => {
+        await addMoreDescription(activeUserName, id, descriptionBox.value);
+        descriptionNode.textContent = descriptionBox.value;
+        buttonWrapper.append(longerDescriptionButton);
+        cardWrapperNode.removeChild(descriptionBox);
+        cardWrapperNode.removeChild(descriptionSubmissionButton);
+    });
+    buttonWrapper.append(deleteButton, longerDescriptionButton);
+    cardWrapperNode.append(linkNode, descriptionNode, buttonWrapper);
     contentNode?.append(cardWrapperNode);
 };
 const formMaker = () => {
@@ -46,7 +68,7 @@ const formMaker = () => {
     inputButtonNode.addEventListener("click", async (ev) => {
         const id = Date.now();
         await addNewItem(itemLinkNode.value, itemTitleNode.value, activeUserName, id);
-        CardMaker(itemLinkNode.value, itemTitleNode.value, id);
+        CardMaker(itemLinkNode.value, itemTitleNode.value, id, null);
         itemTitleNode.value = "";
         itemLinkNode.value = "";
     });
@@ -84,7 +106,7 @@ const cardGenerator = async () => {
     const activeUser = (await currentUser(activeUserName));
     activeUser.items = await getUserItems(activeUserName);
     activeUser.items?.forEach((item) => {
-        CardMaker(item.value.link, item.value.description, item.key);
+        CardMaker(item.value.link, item.value.description, item.key, item.value.moreDetails);
     });
 };
 const familyList = document.getElementById("familyList");

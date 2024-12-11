@@ -19,8 +19,7 @@ const existingCountDown = (countDownDate: number) => {
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
     );
 
-    dateWrapperNode.textContent =
-      days + "d " + hours + "h " + "until birthday";
+    dateWrapperNode.textContent = days + "d " + hours + "h " + "until birthday";
   }, 1000);
   return dateWrapperNode;
 };
@@ -31,7 +30,8 @@ const CardMaker = (
   id: number,
   userNode: HTMLDivElement,
   userName: string,
-  purchased: boolean
+  purchased: boolean,
+  moreDetails: string | null
 ) => {
   var beenPurchased = purchased;
   const itemId = id;
@@ -63,7 +63,31 @@ const CardMaker = (
     }
   });
 
-  cardWrapperNode.append(linkNode, purchaseButton);
+  const buttonWrapper = document.createElement("div");
+  buttonWrapper.append(purchaseButton);
+  buttonWrapper.setAttribute("id", "userButtons");
+  const descriptionNode = document.createElement("p");
+  if (moreDetails != null) {
+    const showDescriptionButton = document.createElement("button");
+    showDescriptionButton.textContent = "More info";
+    showDescriptionButton.addEventListener("click", () => {
+      buttonWrapper.removeChild(showDescriptionButton);
+      buttonWrapper.append(hideDescription);
+      descriptionNode.textContent = moreDetails;
+      console.log("there's more details" + moreDetails);
+    });
+
+    const hideDescription = document.createElement("button");
+    hideDescription.textContent = "Hide";
+    hideDescription.addEventListener("click", () => {
+      descriptionNode.textContent = "";
+      buttonWrapper.removeChild(hideDescription);
+      buttonWrapper.append(showDescriptionButton);
+    });
+    buttonWrapper.append(showDescriptionButton);
+  }
+
+  cardWrapperNode.append(linkNode, descriptionNode, buttonWrapper);
   userNode.append(cardWrapperNode);
 };
 
@@ -89,8 +113,10 @@ const GenerateList = (familyList: any[]) => {
             item.key,
             userNode,
             user.userName,
-            item.value.purchased
+            item.value.purchased,
+            item.value.moreDetails
           );
+          console.log(item.value.moreDetails);
         });
         contentNode?.append(userNode);
       }

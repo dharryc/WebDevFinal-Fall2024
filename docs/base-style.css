@@ -28,6 +28,7 @@
     flex-direction: column;
     overflow: scroll;
     max-width: 80vw;
+    min-width: 80vw;
 }
 
 #nav {
@@ -124,7 +125,7 @@ a:active {
 }
 
 .purchased {
-    background-color: darkblue;
+    border-style: dashed;
 }
 
 #filterBar {

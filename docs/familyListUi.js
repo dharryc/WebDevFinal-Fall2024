@@ -12,12 +12,11 @@ const existingCountDown = (countDownDate) => {
         const distance = countDownDate - now;
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        dateWrapperNode.textContent =
-            days + "d " + hours + "h " + "until birthday";
+        dateWrapperNode.textContent = days + "d " + hours + "h " + "until birthday";
     }, 1000);
     return dateWrapperNode;
 };
-const CardMaker = (link, description, id, userNode, userName, purchased) => {
+const CardMaker = (link, description, id, userNode, userName, purchased, moreDetails) => {
     var beenPurchased = purchased;
     const itemId = id;
     const parentUserName = userName;
@@ -46,7 +45,29 @@ const CardMaker = (link, description, id, userNode, userName, purchased) => {
             cardWrapperNode.classList.remove("purchased");
         }
     });
-    cardWrapperNode.append(linkNode, purchaseButton);
+    const buttonWrapper = document.createElement("div");
+    buttonWrapper.append(purchaseButton);
+    buttonWrapper.setAttribute("id", "userButtons");
+    const descriptionNode = document.createElement("p");
+    if (moreDetails != null) {
+        const showDescriptionButton = document.createElement("button");
+        showDescriptionButton.textContent = "More info";
+        showDescriptionButton.addEventListener("click", () => {
+            buttonWrapper.removeChild(showDescriptionButton);
+            buttonWrapper.append(hideDescription);
+            descriptionNode.textContent = moreDetails;
+            console.log("there's more details" + moreDetails);
+        });
+        const hideDescription = document.createElement("button");
+        hideDescription.textContent = "Hide";
+        hideDescription.addEventListener("click", () => {
+            descriptionNode.textContent = "";
+            buttonWrapper.removeChild(hideDescription);
+            buttonWrapper.append(showDescriptionButton);
+        });
+        buttonWrapper.append(showDescriptionButton);
+    }
+    cardWrapperNode.append(linkNode, descriptionNode, buttonWrapper);
     userNode.append(cardWrapperNode);
 };
 const GenerateList = (familyList) => {
@@ -65,7 +86,8 @@ const GenerateList = (familyList) => {
                     userNode.append(existingCountDown(user.birthDay));
                 }
                 user.items.forEach((item) => {
-                    CardMaker(item.value.link, item.value.description, item.key, userNode, user.userName, item.value.purchased);
+                    CardMaker(item.value.link, item.value.description, item.key, userNode, user.userName, item.value.purchased, item.value.moreDetails);
+                    console.log(item.value.moreDetails);
                 });
                 contentNode?.append(userNode);
             }

@@ -4,12 +4,18 @@ import {
   getUserItems,
   deleteItem,
   addDate,
+  addMoreDescription,
 } from "./userService.js";
 
 const userNameInUrl = new URLSearchParams(window.location.search);
 const activeUserName = userNameInUrl.get("user");
 
-const CardMaker = (link: string, description: string, id: number) => {
+const CardMaker = (
+  link: string,
+  description: string,
+  id: number,
+  moreDetails: string | null
+) => {
   const contentNode = document.getElementById("pageContent");
 
   const cardWrapperNode = document.createElement("div");
@@ -18,6 +24,9 @@ const CardMaker = (link: string, description: string, id: number) => {
 
   const linkNode = document.createElement("a");
   linkNode.textContent = description;
+
+  const descriptionNode = document.createElement("p");
+  descriptionNode.textContent = moreDetails;
 
   linkNode.setAttribute("href", link);
 
@@ -29,7 +38,32 @@ const CardMaker = (link: string, description: string, id: number) => {
     contentNode?.removeChild(cardWrapperNode);
   });
 
-  cardWrapperNode.append(linkNode, deleteButton);
+  const descriptionBox = document.createElement("textarea");
+
+  const buttonWrapper = document.createElement("div");
+  buttonWrapper.setAttribute("id", "userButtons");
+
+  const longerDescriptionButton = document.createElement("button");
+  longerDescriptionButton.textContent = "Add description";
+  longerDescriptionButton.addEventListener("click", () => {
+    buttonWrapper.removeChild(longerDescriptionButton);
+    cardWrapperNode.append(descriptionBox);
+    cardWrapperNode.append(descriptionSubmissionButton);
+  });
+
+  const descriptionSubmissionButton = document.createElement("button");
+  descriptionSubmissionButton.textContent = "Confirm description";
+  descriptionSubmissionButton.addEventListener("click", async () => {
+    await addMoreDescription(activeUserName, id, descriptionBox.value);
+    descriptionNode.textContent = descriptionBox.value;
+    buttonWrapper.append(longerDescriptionButton);
+    cardWrapperNode.removeChild(descriptionBox);
+    cardWrapperNode.removeChild(descriptionSubmissionButton);
+  });
+
+  buttonWrapper.append(deleteButton, longerDescriptionButton);
+
+  cardWrapperNode.append(linkNode, descriptionNode, buttonWrapper);
   contentNode?.append(cardWrapperNode);
 };
 
@@ -73,7 +107,7 @@ const formMaker = () => {
       activeUserName,
       id
     );
-    CardMaker(itemLinkNode.value, itemTitleNode.value, id);
+    CardMaker(itemLinkNode.value, itemTitleNode.value, id, null);
     itemTitleNode.value = "";
     itemLinkNode.value = "";
   });
@@ -108,14 +142,19 @@ const countDownAdder = () => {
   const submitButton = document.createElement("button");
   submitButton.textContent = "Confirm date";
 
-  const confirmationParagraph = document.createElement("p")
+  const confirmationParagraph = document.createElement("p");
 
   submitButton.addEventListener("click", async (ev) => {
-    await addDate(activeUserName, dayPicker.valueAsNumber)
-    confirmationParagraph.textContent = "Birthday added!"
+    await addDate(activeUserName, dayPicker.valueAsNumber);
+    confirmationParagraph.textContent = "Birthday added!";
   });
 
-  countDownForm.append(dayLabel, dayPicker, submitButton, confirmationParagraph);
+  countDownForm.append(
+    dayLabel,
+    dayPicker,
+    submitButton,
+    confirmationParagraph
+  );
   document.getElementById("form")?.append(countDownForm);
 };
 
@@ -127,7 +166,12 @@ const cardGenerator = async () => {
   const activeUser = (await currentUser(activeUserName)) as any;
   activeUser.items = await getUserItems(activeUserName);
   activeUser.items?.forEach((item: any) => {
-    CardMaker(item.value.link, item.value.description, item.key);
+    CardMaker(
+      item.value.link,
+      item.value.description,
+      item.key,
+      item.value.moreDetails
+    );
   });
 };
 

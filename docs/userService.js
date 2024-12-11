@@ -38,4 +38,13 @@ export const addDate = async (userName, birthDay) => {
         },
     });
 };
+export const addMoreDescription = async (userName, itemId, description) => {
+    await fetch(`${rootUrl}/${userName}/${itemId}/addDetails`, {
+        method: "POST",
+        body: JSON.stringify(description),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+};
 //# sourceMappingURL=userService.js.map

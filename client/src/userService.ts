@@ -47,3 +47,13 @@ export const addDate = async (userName: string | null, birthDay: number) => {
     },
   });
 };
+
+export const addMoreDescription = async (userName: string | null, itemId: number, description: string) =>{
+  await fetch(`${rootUrl}/${userName}/${itemId}/addDetails`, {
+    method: "POST",
+    body : JSON.stringify(description),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+}
