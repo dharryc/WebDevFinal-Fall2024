@@ -23,9 +23,11 @@ const CardMaker = (link, description, id, userNode, userName, purchased, moreDet
     const cardWrapperNode = document.createElement("div");
     cardWrapperNode.classList.add("itemCard");
     const linkNode = document.createElement("a");
+    linkNode.setAttribute("target", "_blank");
     linkNode.textContent = description;
     linkNode.setAttribute("href", link);
     const purchaseButton = document.createElement("button");
+    purchaseButton.classList.add("button");
     if (!beenPurchased)
         purchaseButton.textContent = "Mark as purchased";
     else {
@@ -51,6 +53,7 @@ const CardMaker = (link, description, id, userNode, userName, purchased, moreDet
     const descriptionNode = document.createElement("p");
     if (moreDetails != null) {
         const showDescriptionButton = document.createElement("button");
+        showDescriptionButton.classList.add("button");
         showDescriptionButton.textContent = "More info";
         showDescriptionButton.addEventListener("click", () => {
             buttonWrapper.removeChild(showDescriptionButton);
@@ -59,6 +62,7 @@ const CardMaker = (link, description, id, userNode, userName, purchased, moreDet
             console.log("there's more details" + moreDetails);
         });
         const hideDescription = document.createElement("button");
+        hideDescription.classList.add("button");
         hideDescription.textContent = "Hide";
         hideDescription.addEventListener("click", () => {
             descriptionNode.textContent = "";

@@ -7,11 +7,13 @@ const CardMaker = (link, description, id, moreDetails) => {
     cardWrapperNode.setAttribute("id", id.toString());
     cardWrapperNode.classList.add("itemCard");
     const linkNode = document.createElement("a");
+    linkNode.setAttribute("target", "_blank");
     linkNode.textContent = description;
     const descriptionNode = document.createElement("p");
     descriptionNode.textContent = moreDetails;
     linkNode.setAttribute("href", link);
     const deleteButton = document.createElement("button");
+    deleteButton.classList.add("button");
     deleteButton.textContent = "Delete Item";
     deleteButton.addEventListener("click", async () => {
         await deleteItem(activeUserName, id);
@@ -22,13 +24,17 @@ const CardMaker = (link, description, id, moreDetails) => {
     const buttonWrapper = document.createElement("div");
     buttonWrapper.setAttribute("id", "userButtons");
     const longerDescriptionButton = document.createElement("button");
+    longerDescriptionButton.classList.add("button");
     longerDescriptionButton.textContent = "Add description";
     longerDescriptionButton.addEventListener("click", () => {
         buttonWrapper.removeChild(longerDescriptionButton);
         cardWrapperNode.append(descriptionBox);
         cardWrapperNode.append(descriptionSubmissionButton);
+        buttonWrapper.removeChild(deleteButton);
+        descriptionBox.value = moreDetails;
     });
     const descriptionSubmissionButton = document.createElement("button");
+    descriptionSubmissionButton.classList.add("button");
     descriptionSubmissionButton.textContent = "Confirm description";
     descriptionSubmissionButton.addEventListener("click", async () => {
         await addMoreDescription(activeUserName, id, descriptionBox.value);
@@ -36,6 +42,7 @@ const CardMaker = (link, description, id, moreDetails) => {
         buttonWrapper.append(longerDescriptionButton);
         cardWrapperNode.removeChild(descriptionBox);
         cardWrapperNode.removeChild(descriptionSubmissionButton);
+        buttonWrapper.append(deleteButton);
     });
     buttonWrapper.append(deleteButton, longerDescriptionButton);
     cardWrapperNode.append(linkNode, descriptionNode, buttonWrapper);
@@ -61,6 +68,7 @@ const formMaker = () => {
     linkLabel.setAttribute("for", "link");
     linkLabel.textContent = "Link for your item:";
     const inputButtonNode = document.createElement("button");
+    inputButtonNode.classList.add("button");
     inputButtonNode.textContent = "Add Item";
     inputParentNode.addEventListener("submit", (ev) => {
         ev.preventDefault();
@@ -68,7 +76,7 @@ const formMaker = () => {
     inputButtonNode.addEventListener("click", async (ev) => {
         const id = Date.now();
         await addNewItem(itemLinkNode.value, itemTitleNode.value, activeUserName, id);
-        CardMaker(itemLinkNode.value, itemTitleNode.value, id, null);
+        CardMaker(itemLinkNode.value, itemTitleNode.value, id, "");
         itemTitleNode.value = "";
         itemLinkNode.value = "";
     });
@@ -90,6 +98,7 @@ const countDownAdder = () => {
     dayLabel.setAttribute("for", "eventDate");
     dayLabel.textContent = "Set birthday: ";
     const submitButton = document.createElement("button");
+    submitButton.classList.add("button");
     submitButton.textContent = "Confirm date";
     const confirmationParagraph = document.createElement("p");
     submitButton.addEventListener("click", async (ev) => {

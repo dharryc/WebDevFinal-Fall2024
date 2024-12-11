@@ -40,11 +40,13 @@ const CardMaker = (
   cardWrapperNode.classList.add("itemCard");
 
   const linkNode = document.createElement("a");
+  linkNode.setAttribute("target", "_blank")
   linkNode.textContent = description;
 
   linkNode.setAttribute("href", link);
 
   const purchaseButton = document.createElement("button");
+  purchaseButton.classList.add("button");
   if (!beenPurchased) purchaseButton.textContent = "Mark as purchased";
   else {
     purchaseButton.textContent = "Remove purchased status";
@@ -69,6 +71,7 @@ const CardMaker = (
   const descriptionNode = document.createElement("p");
   if (moreDetails != null) {
     const showDescriptionButton = document.createElement("button");
+    showDescriptionButton.classList.add("button");
     showDescriptionButton.textContent = "More info";
     showDescriptionButton.addEventListener("click", () => {
       buttonWrapper.removeChild(showDescriptionButton);
@@ -78,6 +81,7 @@ const CardMaker = (
     });
 
     const hideDescription = document.createElement("button");
+    hideDescription.classList.add("button");
     hideDescription.textContent = "Hide";
     hideDescription.addEventListener("click", () => {
       descriptionNode.textContent = "";
