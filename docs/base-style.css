@@ -3,6 +3,7 @@
 :root {
     --background-color: black;
     --background: hsl(249, 9%, 15%);
+    --border-for-lists: hsl(248, 22%, 28%);
     --text-color: hsl(0, 0%, 100%);
     --link-color: hsl(189, 100%, 68%);
     color: var(--text-color);
@@ -29,6 +30,8 @@
     overflow: scroll;
     max-width: 80vw;
     min-width: 80vw;
+    border: solid;
+    border-color: var(--border-for-lists);
 }
 
 #nav {
