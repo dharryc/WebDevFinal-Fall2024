@@ -135,30 +135,28 @@ a:active {
     margin-top: 2em;
 }
 
-/* CSS */
 .button {
+    margin-top: .25em;
     align-items: center;
     appearance: none;
+    transition: background-color .2s, background-position .2s;
+    position: relative;
     background-color: #0c3a5a;
-    background-image: linear-gradient(1deg, hsl(249, 10%, 15%), hsl(249, 10%, 30%) 99%);
-    background-size: calc(100% + 20px) calc(100% + 20px);
+    font-family: "Tinos", serif;
     border-radius: 100px;
+    display: inline-flex;
     border-width: 0;
+    vertical-align: top;
     box-shadow: none;
     box-sizing: border-box;
     color: #FFFFFF;
-    cursor: pointer;
-    display: inline-flex;
     justify-content: center;
     line-height: 1.5;
-    position: relative;
+    background-size: calc(100% + 20px) calc(100% + 20px);
     text-align: center;
     text-decoration: none;
-    transition: background-color .2s, background-position .2s;
-    vertical-align: top;
+    background-image: linear-gradient(1deg, hsl(249, 10%, 15%), hsl(249, 10%, 30%) 99%);
     white-space: nowrap;
-    margin-top: .25em;
-    font-family: "Tinos", serif;
 }
 
 input[type="text"],

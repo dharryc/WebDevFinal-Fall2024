@@ -40,7 +40,7 @@ const CardMaker = (
   cardWrapperNode.classList.add("itemCard");
 
   const linkNode = document.createElement("a");
-  linkNode.setAttribute("target", "_blank")
+  linkNode.setAttribute("target", "_blank");
   linkNode.textContent = description;
 
   linkNode.setAttribute("href", link);
@@ -69,7 +69,7 @@ const CardMaker = (
   buttonWrapper.append(purchaseButton);
   buttonWrapper.setAttribute("id", "userButtons");
   const descriptionNode = document.createElement("p");
-  if (moreDetails != null) {
+  if (moreDetails != null && moreDetails != "") {
     const showDescriptionButton = document.createElement("button");
     showDescriptionButton.classList.add("button");
     showDescriptionButton.textContent = "More info";
@@ -107,7 +107,6 @@ const GenerateList = (familyList: any[]) => {
           user.userName.charAt(0).toUpperCase() + user.userName.slice(1);
         userNode.append(userTitle);
         if (user.birthDay != null) {
-          console.log("here");
           userNode.append(existingCountDown(user.birthDay));
         }
         user.items.forEach((item: any) => {

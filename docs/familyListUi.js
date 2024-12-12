@@ -51,7 +51,7 @@ const CardMaker = (link, description, id, userNode, userName, purchased, moreDet
     buttonWrapper.append(purchaseButton);
     buttonWrapper.setAttribute("id", "userButtons");
     const descriptionNode = document.createElement("p");
-    if (moreDetails != null) {
+    if (moreDetails != null && moreDetails != "") {
         const showDescriptionButton = document.createElement("button");
         showDescriptionButton.classList.add("button");
         showDescriptionButton.textContent = "More info";
@@ -86,7 +86,6 @@ const GenerateList = (familyList) => {
                     user.userName.charAt(0).toUpperCase() + user.userName.slice(1);
                 userNode.append(userTitle);
                 if (user.birthDay != null) {
-                    console.log("here");
                     userNode.append(existingCountDown(user.birthDay));
                 }
                 user.items.forEach((item) => {
